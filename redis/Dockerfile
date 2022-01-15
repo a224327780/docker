@@ -29,4 +29,4 @@ WORKDIR /data/redis
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
 EXPOSE 6379
-CMD ["redis-server", "/usr/local/redis/etc/redis.conf", "--requirepass \"${REDIS_PSSWORD}\""]
+CMD ["redis-server", "/usr/local/redis/etc/redis.conf"]
