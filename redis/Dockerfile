@@ -21,7 +21,7 @@ RUN apt-get update -y \
     && apt-get purge build-essential gcc make wget libc6-dev ca-certificates -y \
     && apt-get autoremove -y \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
     && chmod +x /docker-entrypoint.sh
 
 WORKDIR /data/redis
