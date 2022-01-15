@@ -1,6 +1,6 @@
 FROM ghcr.io/a224327780/debian
 
-ENV  PHP_VERSION=php-7.3.29 PHPRedis_Ver=redis-5.3.4 Freetype_New_Ver=freetype-2.10.1
+ENV  PHP_VERSION=php-7.3.29 PHPRedis_Ver=redis-5.3.4 Freetype_New_Ver=freetype-2.10.1 DEBIAN_FRONTEND=noninteractive
 ADD conf /tmp/conf
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 

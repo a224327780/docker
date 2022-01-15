@@ -1,6 +1,6 @@
 FROM ghcr.io/a224327780/debian
 
-ENV Redis_Stable_Ver=redis-6.2.6 TIME_ZONE=Asia/Shanghai
+ENV Redis_Stable_Ver=redis-6.2.6 DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update -y \
     && apt-get --no-install-recommends install -y build-essential gcc make wget libc6-dev ca-certificates \

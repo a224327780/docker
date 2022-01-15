@@ -12,7 +12,7 @@ RUN apt-get update -y \
     && ln -sf /usr/local/python3/bin/python3.7 /usr/bin/python \
     && ln -sf /usr/local/python3/bin/pip3.7 /usr/bin/pip3 \
     && ln -sf /usr/local/python3/bin/pip3.7 /usr/bin/pip \
-    && python --version && pip install --upgrade pip \
+    && python --version && pip install --upgrade pip && pip --version \
     && apt-get purge wget make gcc g++ -y \
     && apt-get autoremove -y \
     && apt-get clean \
