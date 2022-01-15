@@ -1,6 +1,6 @@
 FROM ghcr.io/a224327780/debian
 
-ENV Redis_Stable_Ver=redis-6.2.6 DEBIAN_FRONTEND=noninteractive
+ENV Redis_Stable_Ver=redis-6.2.6 DEBIAN_FRONTEND=noninteractive REDIS_PSSWORD=a224327780
 COPY redis/docker-entrypoint.sh /docker-entrypoint.sh
 
 RUN apt-get update -y \
@@ -29,4 +29,4 @@ WORKDIR /data/redis
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
 EXPOSE 6379
-CMD ["redis-server", "/usr/local/redis/etc/redis.conf"]
+CMD ["redis-server", "/usr/local/redis/etc/redis.conf", "--requirepass \"${REDIS_PSSWORD}\""]
