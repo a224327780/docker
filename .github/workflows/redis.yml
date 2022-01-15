@@ -5,6 +5,7 @@ on:
     branches: [ master ]
     paths:
       - 'redis/**'
+      - '**/redis.yml'
 
 jobs:
   build:
