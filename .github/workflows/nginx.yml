@@ -30,6 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: ./nignx/
+          # file: ./nignx/Dockerfile
+          context: {{defaultContext}}:nginx
           platforms: linux/amd64,linux/arm64
           tags: ghcr.io/a224327780/nginx

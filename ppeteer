@@ -1,11 +1,8 @@
 FROM python:3.7-bullseye
 
-RUN pip --no-cache-dir  install pyppeteer requests pyquery python-dotenv \
+RUN pip install --no-cache-dir pyppeteer requests pyquery python-dotenv \
     && curl -sSL https://dl.google.com/linux/linux_signing_key.pub | apt-key add - \
     && echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list \
-    && apt update -y && apt install -y google-chrome-stable \
-    && mkdir -p /data/python
-
-WORKDIR /data/python
+    && apt update -y && apt install -y google-chrome-stable
 
 CMD ["python3"]
