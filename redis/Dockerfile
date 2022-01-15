@@ -1,6 +1,8 @@
 FROM ghcr.io/a224327780/debian
 
 ENV Redis_Stable_Ver=redis-6.2.6 DEBIAN_FRONTEND=noninteractive REDIS_PSSWORD=a224327780
+ENV PATH=$PATH:/usr/local/redis/bin
+
 COPY redis/docker-entrypoint.sh /docker-entrypoint.sh
 
 RUN apt-get update -y \
@@ -12,8 +14,6 @@ RUN apt-get update -y \
     && tar zxf ${Redis_Stable_Ver}.tar.gz \
     && cd ${Redis_Stable_Ver} \
     && make PREFIX=/usr/local/redis install \
-    && ln -sf /usr/local/redis/bin/redis-server /usr/bin/redis-server \
-    && ln -sf /usr/local/redis/bin/redis-cli /usr/bin/redis-cli \
     && mkdir -p /usr/local/redis/etc/ && mkdir -p /data/redis \
     && chown -R redis:redis /data/redis \
     && cp redis.conf  /usr/local/redis/etc/ \
