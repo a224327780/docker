@@ -1,7 +1,7 @@
 FROM ghcr.io/a224327780/debian
 
 ENV Redis_Stable_Ver=redis-6.2.6 DEBIAN_FRONTEND=noninteractive
-COPY redis/docker-entrypoint.sh /usr/local/bin/
+COPY redis/docker-entrypoint.sh /docker-entrypoint.sh
 
 RUN apt-get update -y \
     && apt-get --no-install-recommends install -y build-essential gcc make wget libc6-dev ca-certificates \
@@ -22,10 +22,11 @@ RUN apt-get update -y \
     && apt-get autoremove -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    && chmod +x /docker-entrypoint.sh
 
 WORKDIR /data/redis
 
-ENTRYPOINT ["docker-entrypoint.sh"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
 
 EXPOSE 6379
 CMD ["redis-server", "/usr/local/redis/etc/redis.conf"]
