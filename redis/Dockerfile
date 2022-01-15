@@ -1,6 +1,7 @@
 FROM ghcr.io/a224327780/debian
 
 ENV Redis_Stable_Ver=redis-6.2.6 DEBIAN_FRONTEND=noninteractive
+COPY redis/docker-entrypoint.sh /usr/local/bin/
 
 RUN apt-get update -y \
     && apt-get --no-install-recommends install -y build-essential gcc make wget libc6-dev ca-certificates \
@@ -24,7 +25,6 @@ RUN apt-get update -y \
 
 WORKDIR /data/redis
 
-COPY docker-entrypoint.sh /usr/local/bin/
 ENTRYPOINT ["docker-entrypoint.sh"]
 
 EXPOSE 6379
