@@ -3,7 +3,7 @@ FROM ghcr.io/a224327780/debian
 ENV NGINX_VERSION=nginx-1.20.1 OPENSSL_VERSION=openssl-1.1.1k DEBIAN_FRONTEND=noninteractive
 ADD conf /tmp/conf
 
-COPY docker-entrypoint.sh /etc/docker-entrypoint.sh
+COPY ./docker-entrypoint.sh /docker-entrypoint.sh
 
 RUN apt-get update -y \
     && apt-get --no-install-recommends install -y build-essential gcc g++ make wget openssl libssl-dev zlib1g zlib1g-dev libpcre3 libpcre3-dev \
@@ -54,7 +54,7 @@ RUN apt-get update -y \
 WORKDIR /data/wwwroot
 EXPOSE 80 443
 
-ENTRYPOINT ["/etc/docker-entrypoint.sh"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
 
 STOPSIGNAL SIGTERM
 
