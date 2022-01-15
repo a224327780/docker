@@ -1,7 +1,7 @@
 FROM ghcr.io/a224327780/debian
 
 ENV NGINX_VERSION=nginx-1.20.1 OPENSSL_VERSION=openssl-1.1.1k DEBIAN_FRONTEND=noninteractive
-ENV PATH=$PATH:/usr/local/nginx/sbin
+ENV PATH=$PATH:/usr/local/nginx/sbin WWW_ROOT=/data/wwwroot/default
 
 ADD nginx/conf /tmp/conf
 
@@ -36,14 +36,12 @@ RUN apt-get update -y \
     && make install \
     && strip /usr/local/nginx/sbin/nginx* \
     && ln -sf /usr/local/nginx/sbin/nginx /usr/bin/nginx \
-    && mkdir -p /data/nginx/vhost/ \
-    && mkdir -p /data/wwwroot/default/ \
+    && mkdir -p /data/nginx/vhost \
+    && mkdir -p ${WWW_ROOT} \
     && mkdir -p /data/wwwlogs \
-    && chown -R www:www /data/wwwroot \
-    && chown -R www:www /data/nginx/vhost \
-    && chmod 777 /data/wwwlogs \
-    && echo 'nginx version $NGINX_VERSION' > /data/wwwroot/default/index.html \
-    && echo '<?php\nphpinfo();' > /data/wwwroot/default/index.php \
+    && chown -R www:www /data \
+    && echo 'nginx version $NGINX_VERSION' > ${WWW_ROOT}/index.html \
+    && echo '<?php\nphpinfo();' > ${WWW_ROOT}/index.php \
     && rm -f /usr/local/nginx/conf/nginx.conf \
     && mv /tmp/conf/init.d.nginx /etc/init.d/nginx \
     && cp -ra /tmp/conf/* /usr/local/nginx/conf/ \
