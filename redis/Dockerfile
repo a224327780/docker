@@ -18,6 +18,7 @@ RUN apt-get update -y \
     && chown -R redis:redis /data/redis \
     && cp redis.conf  /usr/local/redis/etc/ \
     && sed -i 's#^dir.*#dir \/data\/redis#g' /usr/local/redis/etc/redis.conf \
+    && sed -i 's/^bind 127.0.0.1/bind 0.0.0.0/g' /usr/local/redis/etc/redis.conf \
     && apt-get purge build-essential gcc make wget libc6-dev ca-certificates -y \
     && apt-get autoremove -y \
     && apt-get clean \
@@ -29,4 +30,4 @@ WORKDIR /data/redis
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
 EXPOSE 6379
-CMD ["redis-server", "/usr/local/redis/etc/redis.conf"]
+CMD ["redis-server", "/usr/local/redis/etc/redis.conf", "--requirepass \"${REDIS_PSSWORD}\""]
