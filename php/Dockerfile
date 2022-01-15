@@ -76,7 +76,8 @@ RUN apt-get update -y \
     && composer --version && php --version \
     && apt-get purge --auto-remove binutils autoconf dpkg-dev g++ gcc libc-dev make pkg-config re2c wget curl -y \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+    && chmod +x /docker-entrypoint.sh
 
 WORKDIR /data/wwwroot
 

@@ -50,7 +50,8 @@ RUN apt-get update -y \
     && apt-get purge wget make gcc g++ -y \
     && apt-get autoremove -y \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+    && chmod +x /docker-entrypoint.sh
 
 WORKDIR /data/wwwroot
 EXPOSE 80 443
