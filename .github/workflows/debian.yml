@@ -3,8 +3,6 @@ name: Debian
 on:
   push:
     branches: [ master ]
-    paths:
-      - 'debian'
 
 jobs:
   build:
@@ -29,6 +27,6 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          file: ./debian
+          file: debian
           platforms: linux/amd64,linux/arm64
           tags: ghcr.io/a224327780/debian

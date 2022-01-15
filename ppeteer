@@ -1,8 +1,10 @@
-FROM python:3.6-stretch
+FROM python:3.7-stretch
 
-RUN rm -rf /etc/localtime && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+RUN pip --no-cache-dir  install pyppeteer requests pyquery python-dotenv \
+    && curl -sSL https://dl.google.com/linux/linux_signing_key.pub | apt-key add - \
+    && echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list \
+    && apt update -y && apt install -y google-chrome-stable \
     && mkdir -p /data/python
-RUN pip install --upgrade pip && pip install pyppeteer requests pyquery python-dotenv
 
 WORKDIR /data/python
 
