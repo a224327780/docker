@@ -1,0 +1,9 @@
+FROM python:3.6-stretch
+
+RUN rm -rf /etc/localtime && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+    && mkdir -p /data/python
+RUN pip install --upgrade pip && pip install pyppeteer requests pyquery python-dotenv
+
+WORKDIR /data/python
+
+CMD ["python3"]
