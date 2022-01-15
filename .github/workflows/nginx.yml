@@ -5,6 +5,7 @@ on:
     branches: [ master ]
     paths:
       - 'nginx/**'
+      - '**/nginx.yml'
 
 jobs:
   build:
@@ -29,6 +30,6 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          file: ./nginx/Dockerfile
+          context: ./nignx/
           platforms: linux/amd64,linux/arm64
           tags: ghcr.io/a224327780/nginx

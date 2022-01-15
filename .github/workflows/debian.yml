@@ -3,6 +3,8 @@ name: Debian
 on:
   push:
     branches: [ master ]
+    paths:
+      - 'debian'
 
 jobs:
   build:
