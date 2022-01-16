@@ -40,13 +40,10 @@ RUN apt-get update -y \
     && mkdir -p ${WWW_ROOT} \
     && mkdir -p /data/wwwlogs \
     && chown -R www:www /data \
-    && echo 'nginx version ${NGINX_VERSION}' > /data/wwwlogs/index.html \
     && echo 'nginx version ${NGINX_VERSION}' > ${WWW_ROOT}/index.html \
     && echo '<?php\nphpinfo();' > ${WWW_ROOT}/index.php \
     && rm -f /usr/local/nginx/conf/nginx.conf \
-    && mv /tmp/conf/init.d.nginx /etc/init.d/nginx \
     && cp -ra /tmp/conf/* /usr/local/nginx/conf/ \
-    && chmod +x /etc/init.d/nginx \
     && apt-get purge wget make gcc g++ -y \
     && apt-get autoremove -y \
     && apt-get clean \
