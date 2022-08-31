@@ -8,7 +8,7 @@ RUN apt-get update -y \
     && git clone https://github.com/mozilla/mozjpeg.git \
     && cd mozjpeg \
     && cmake -G"Unix Makefiles" -DPNG_SUPPORTED=OFF \
-    && make install 
+    && make install \
     && ln -sf /opt/mozjpeg/bin/cjpeg /usr/bin/mozjpeg
 
 CMD ["mozjpeg", "--version"]
