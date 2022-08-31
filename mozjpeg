@@ -1,0 +1,11 @@
+FROM ghcr.io/a224327780/debian
+
+ENV DEBIAN_FRONTEND=noninteractive
+WORKDIR /home
+
+RUN apt-get update -y \
+    && apt-get install -y cmake autoconf automake libtool nasm make pkg-config git \
+    && git clone https://github.com/mozilla/mozjpeg.git \
+    && cd mozjpeg \
+    && cmake -G"Unix Makefiles" \
+    && make install 
