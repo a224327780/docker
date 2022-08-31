@@ -2,14 +2,8 @@ FROM debian:bullseye
 
 ENV DEBIAN_FRONTEND=noninteractive TIME_ZONE=Asia/Shanghai
 
-RUN rm -rf /etc/localtime && ln -sf /usr/share/zoneinfo/${TIME_ZONE} /etc/localtime \
-    && echo "* soft nproc 65535" >> /etc/security/limits.conf \
-    && echo "* hard nproc 65535" >> /etc/security/limits.conf \
-    && echo "* soft nofile 65535" >> /etc/security/limits.conf \
-    && echo "* hard nofile 65535" >> /etc/security/limits.conf \
-    && echo "fs.file-max=65535" >> /etc/sysctl.conf \
-    && apt-get update -y \
-    && apt-get install -y --no-install-recommends cmake autoconf automake libtool nasm make pkg-config git zlib1g-dev \
+RUN apt-get update -y \
+    && apt-get install --no-install-recommends cmake autoconf automake libtool nasm make pkg-config git zlib1g-dev -y\
     && git clone https://github.com/mozilla/mozjpeg.git \
     && cd mozjpeg \
     && cmake -G"Unix Makefiles" -DPNG_SUPPORTED=OFF \
