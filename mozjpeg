@@ -4,8 +4,11 @@ ENV DEBIAN_FRONTEND=noninteractive
 WORKDIR /home
 
 RUN apt-get update -y \
-    && apt-get install -y cmake autoconf automake libtool nasm make pkg-config git \
+    && apt-get install -y cmake autoconf automake libtool nasm make pkg-config git zlib1g-dev \
     && git clone https://github.com/mozilla/mozjpeg.git \
     && cd mozjpeg \
-    && cmake -G"Unix Makefiles" \
+    && cmake -G"Unix Makefiles" -DPNG_SUPPORTED=OFF \
     && make install 
+    && ln -sf /opt/mozjpeg/bin/cjpeg /usr/bin/mozjpeg
+
+CMD ["mozjpeg", "--version"]
