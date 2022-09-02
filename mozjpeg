@@ -9,6 +9,6 @@ RUN apt-get update -y \
     && cmake -G"Unix Makefiles" -DPNG_SUPPORTED=OFF \
     && make install \
     && ln -sf /opt/mozjpeg/bin/cjpeg /usr/bin/mozjpeg \
-    && mozjpeg --version
+    && mozjpeg -version
 
 CMD ["mozjpeg"]
