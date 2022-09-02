@@ -40,6 +40,7 @@ RUN apt-get update -y \
     && mkdir -p ${WWW_ROOT} \
     && mkdir -p /data/wwwlogs \
     && chown -R www:www /data \
+    && chmod -R 777 /data/wwwlogs \
     && echo 'nginx version ${NGINX_VERSION}' > ${WWW_ROOT}/index.html \
     && echo '<?php\nphpinfo();' > ${WWW_ROOT}/index.php \
     && rm -f /usr/local/nginx/conf/nginx.conf \

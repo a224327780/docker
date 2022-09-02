@@ -6,7 +6,7 @@ RUN apt-get update -y \
     && apt-get install --no-install-recommends cmake autoconf automake libtool nasm make pkg-config git zlib1g-dev wget -y\
     && wget --no-check-certificate https://github.com/mozilla/mozjpeg/archive/refs/tags/v4.1.1.tar.gz && tar -zxvf v4.1.1.tar.gz \
     && cd mozjpeg-4.1.1 \
-    && cmake -G"Unix Makefiles" -DPNG_SUPPORTED=OFF \
+    && cmake -G"Unix Makefiles" -DPNG_SUPPORTED=OFF -DENABLE_SHARED=OFF \
     && make install \
     && ln -sf /opt/mozjpeg/bin/cjpeg /usr/bin/mozjpeg \
     && mozjpeg -version
