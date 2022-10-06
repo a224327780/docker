@@ -15,13 +15,6 @@ RUN apt-get update -y \
     && python --version && pip install --upgrade pip && pip --version \
     && apt-get purge wget make gcc g++ -y \
     && apt-get autoremove -y \
-    && find /usr/local -depth \
-        \( \
-            \( -type d -a \( -name test -o -name tests -o -name idle_test \) \) \
-            -o \( -type f -a \( -name '*.pyc' -o -name '*.pyo' -o -name 'libpython*.a' \) \) \
-            -o \( -type f -a -name 'wininst-*.exe' \) \
-        \) -exec rm -rf '{}' + \
-    ; \
     && apt-get clean \
     && cd .. && rm -rf Python-${PYTHON_VERSION}
     
