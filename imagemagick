@@ -7,8 +7,8 @@ RUN apt-get update -y \
     && wget --no-check-certificate https://github.com/ImageMagick/ImageMagick/archive/refs/tags/7.1.0-50.tar.gz && tar -zxvf 7.1.0-50.tar.gz \
     && cd ImageMagick-7.1.0-50 \
     && ./configure --prefix=/usr/local/imagemagick --disable-docs --disable-static \
-    && make && make install \
+    && make && make install &&  ldconfig /usr/local/imagemagick/lib \
     && rm -rf ../ImageMagick-7.1.0-50 \
-    && convert -version
+    && magick -version
 
-ENTRYPOINT ["convert"]
+ENTRYPOINT ["magick "]
