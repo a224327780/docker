@@ -9,6 +9,5 @@ RUN apt-get update -y \
     && ./configure --prefix=/usr/local/imagemagick --disable-docs --disable-static \
     && make && make install &&  ldconfig /usr/local/imagemagick/lib \
     && rm -rf ../ImageMagick-7.1.0-50 \
-    && magick -version
 
-ENTRYPOINT ["magick "]
+ENTRYPOINT ["bash "]
