@@ -6,7 +6,7 @@ RUN apt-get update -y \
     && apt-get install --no-install-recommends build-essential wget -y\
     && wget --no-check-certificate https://github.com/ImageMagick/ImageMagick/archive/refs/tags/7.1.0-50.tar.gz && tar -zxvf 7.1.0-50.tar.gz \
     && cd ImageMagick-7.1.0-50 \
-    && ./configure --prefix=/usr/local/imagemagick --disable-docs --disable-static \
+    && ./configure --prefix=/usr/local/imagemagick --disable-docs --disable-static --disable-shared \
     && make && make install &&  ldconfig /usr/local/imagemagick/lib \
     && rm -rf ../ImageMagick-7.1.0-50 \
     && ln -sf /usr/local/imagemagick/bin/convert /usr/bin/convert \
