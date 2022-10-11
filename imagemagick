@@ -14,4 +14,4 @@ RUN apt-get update -y \
     && ln -sf /usr/local/imagemagick/bin/magick /usr/bin/magick \
     && convert --version
 
-ENTRYPOINT ["convert"]
+cmd ["convert"]
