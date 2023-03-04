@@ -1,5 +1,6 @@
 FROM ghcr.io/a224327780/debian
 
+ARG CODE_RELEASE
 COPY code-server/docker-entrypoint.sh /usr/bin/entrypoint.sh
 
 RUN ARCH="$(dpkg --print-architecture)" \
