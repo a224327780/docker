@@ -1,6 +1,6 @@
 FROM ghcr.io/a224327780/debian
 
-COPY ./docker-entrypoint.sh /usr/bin/entrypoint.sh
+COPY code-server/docker-entrypoint.sh /usr/bin/entrypoint.sh
 
 RUN ARCH="$(dpkg --print-architecture)" \
     && apt-get update && apt-get install --no-install-recommends zsh vim wget curl wget -y \
