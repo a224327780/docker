@@ -1,4 +1,4 @@
-name: Code-Server
+name: Code Server
 
 on:
   push:
