@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y locales && \
     && echo 'export LANG=zh_CN.UTF-8' >> /etc/profile \
     && echo 'export LANGUAGE=zh_CN.UTF-8' >> /etc/profile \
     && echo 'export LC_ALL=zh_CN.UTF-8' >> /etc/profile \
-    && source /etc/profile \
+    && /bin/bash -c 'source /etc/profile' \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /var/tmp/* 
     
