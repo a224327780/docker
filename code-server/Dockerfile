@@ -4,14 +4,21 @@ COPY code-server/docker-entrypoint.sh /usr/bin/entrypoint.sh
 
 RUN ARCH="$(dpkg --print-architecture)" \
     && apt-get update && apt-get install --no-install-recommends zsh vim wget curl wget -y \
-    && VERSION=$(curl -sX GET https://api.github.com/repos/coder/code-server/releases/latest | awk '/tag_name/{print $4;exit}' FS='[""]' | sed 's|^v||'); \
-    && curl -fL https://github.com/coder/code-server/releases/download/v$VERSION/code-server-$VERSION-linux-${ARCH}.tar.gz | tar -C /usr/local/ -xz \
-    && ln -s /usr/local/code-server-$VERSION/bin/code-server /usr/bin/code-server \
+    && echo "**** install code-server ****" && \
+      if [ -z ${CODE_RELEASE+x} ]; then \
+        CODE_RELEASE=$(curl -sX GET https://api.github.com/repos/coder/code-server/releases/latest \
+          | awk '/tag_name/{print $4;exit}' FS='[""]' | sed 's|^v||'); \
+      fi && \
+    mkdir -p /data/code-server/{extensions,data,workspace} \
+    && curl -o /tmp/code-server.tar.gz -L "https://github.com/coder/code-server/releases/download/v${CODE_RELEASE}/code-server-${CODE_RELEASE}-linux-${ARCH}.tar.gz" && \
+  tar xf /tmp/code-server.tar.gz -C \
+
+    && tar xf /tmp/code-server.tar.gz -C /usr/local/ \
+    && ln -s /usr/local/code-server-${CODE_RELEASE}/bin/code-server /usr/bin/code-server \
     && groupadd coder \
     && useradd -s /bin/zsh -g coder coder \
     && echo "coder ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd \
     && echo "coder ALL=(ALL:ALL) ALL" >> /etc/sudoers \
-    && mkdir -p /data/code-server/{extensions,data,workspace} \
     && chown -R coder:coder /data/code-server \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
