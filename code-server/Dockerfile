@@ -10,9 +10,7 @@ RUN ARCH="$(dpkg --print-architecture)" \
           | awk '/tag_name/{print $4;exit}' FS='[""]' | sed 's|^v||'); \
       fi && \
     mkdir -p /data/code-server/{extensions,data,workspace} \
-    && curl -o /tmp/code-server.tar.gz -L "https://github.com/coder/code-server/releases/download/v${CODE_RELEASE}/code-server-${CODE_RELEASE}-linux-${ARCH}.tar.gz" && \
-  tar xf /tmp/code-server.tar.gz -C \
-
+    && wget --no-check-certificate -O /tmp/code-server.tar.gz "https://github.com/coder/code-server/releases/download/v${CODE_RELEASE}/code-server-${CODE_RELEASE}-linux-${ARCH}.tar.gz" \
     && tar xf /tmp/code-server.tar.gz -C /usr/local/ \
     && ln -s /usr/local/code-server-${CODE_RELEASE}/bin/code-server /usr/bin/code-server \
     && groupadd coder \
