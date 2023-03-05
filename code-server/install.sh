@@ -1,6 +1,6 @@
 #!/bin/bash
 
-apt-get update && apt-get install --no-install-recommends ca-certificates zsh git vim wget curl wget -y 
+apt-get update && apt-get install --no-install-recommends ca-certificates zsh git vim wget curl -y 
 
 ARCH=$(dpkg --print-architecture)
 
@@ -19,6 +19,8 @@ echo "${ARCH}-${CODE_RELEASE}"
 wget -nv --no-check-certificate -O /tmp/code-server.tar.gz "https://github.com/coder/code-server/releases/download/v${CODE_RELEASE}/code-server-${CODE_RELEASE}-linux-${ARCH}.tar.gz"
 tar xf /tmp/code-server.tar.gz -C /usr/local/ 
 ln -s /usr/local/code-server-${CODE_RELEASE}/bin/code-server /usr/bin/code-server 
+chmod +x /usr/bin/code-server
+
 # groupadd coder 
 # useradd -s /bin/zsh -g coder coder 
 # echo "coder ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
