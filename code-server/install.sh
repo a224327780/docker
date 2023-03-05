@@ -1,6 +1,6 @@
 #!/bin/bash
 
-apt-get update && apt-get install --no-install-recommends zsh vim wget curl wget -y 
+apt-get update && apt-get install --no-install-recommends ca-certificates zsh vim wget curl wget -y 
 
 ARCH=$(dpkg --print-architecture)
 
@@ -27,10 +27,14 @@ ln -s /usr/local/code-server-${CODE_RELEASE}/bin/code-server /usr/bin/code-serve
 # nvm node
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 nvm install 16
+node --version
 
 # python
 curl https://pyenv.run | bash
 pyenv install 3.8
+python3 --version
+curl -o /tmp/get-pip.py https://bootstrap.pypa.io/get-pip.py
+python3 /tmp/get-pip.py
 
 # zsh
 sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
