@@ -30,6 +30,7 @@ sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install
 chsh -s $(which zsh)
 echo 'alias ll=ls -la' >> ~/.zshrc
 echo 'alias vim=vim' >> ~/.zshrc
+echo 'cd /data/code-server/workspace' >> ~/.zshrc
 
 # # nvm node
 # curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | zsh
