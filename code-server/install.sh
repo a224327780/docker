@@ -1,6 +1,6 @@
 #!/bin/bash
 
-apt-get update && apt-get install --no-install-recommends ca-certificates zsh git vim wget curl -y 
+apt-get update && apt-get install --no-install-recommends ca-certificates zsh git vim wget curl net-tools -y 
 
 ARCH=$(dpkg --print-architecture)
 
@@ -18,7 +18,7 @@ echo "${ARCH}-${CODE_RELEASE}"
 
 wget -nv --no-check-certificate -O /tmp/code-server.tar.gz "https://github.com/coder/code-server/releases/download/v${CODE_RELEASE}/code-server-${CODE_RELEASE}-linux-${ARCH}.tar.gz"
 tar xf /tmp/code-server.tar.gz -C /usr/local/ 
-ln -s /usr/local/code-server-${CODE_RELEASE}/bin/code-server /usr/bin/code-server 
+ln -sf /usr/local/code-server-${CODE_RELEASE}/bin/code-server /usr/bin/code-server 
 chmod +x /usr/bin/code-server
 
 # groupadd coder 
@@ -46,6 +46,6 @@ echo 'alias vim=vim' >> ~/.zshrc
 
 mkdir -p /data/code-server/{extensions,data,workspace}  
 # chown -R coder:coder /data/code-server 
-apt-get clean 
+apt-get autoremove && apt-get clean
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* 
 chmod +x /usr/bin/entrypoint.sh
