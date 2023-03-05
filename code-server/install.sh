@@ -15,7 +15,6 @@ CODE_RELEASE='4.10.1'
 
 #CODE_RELEASE=$(curl -sX GET https://api.github.com/repos/coder/code-server/releases/latest | awk '/tag_name/{print $4;exit}' FS='[""]' | sed 's|^v||')
 echo "${ARCH}-${CODE_RELEASE}"
-cd /tmp
 
 curl -o /tmp/code-server.tar.gz -L "https://github.com/coder/code-server/releases/download/v${CODE_RELEASE}/code-server-${CODE_RELEASE}-linux-${ARCH}.tar.gz"
 tar zxf /tmp/code-server.tar.gz -C /usr/local/ 
@@ -29,15 +28,15 @@ ln -sf "/usr/local/code-server-${CODE_RELEASE}-linux-${ARCH}/bin/code-server" /u
 # zsh
 sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
 chsh -s $(which zsh)
-echo 'alias ll=ls -la' >> ~/.zshrc
-echo 'alias vim=vim' >> ~/.zshrc
-echo 'cd /data/code-server/workspace' >> ~/.zshrc
+echo 'alias ll="ls -la"' >> ~/.zshrc
+echo 'alias vi="vim"' >> ~/.zshrc
 
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
-echo "source ${(q-)PWD}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZDOTDIR:-$HOME}/.oh-my-zsh/plugins/zsh-syntax-highlighting
+echo "source ${ZDOTDIR:-$HOME}/.oh-my-zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc
 
 # nvm node
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | zsh
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+. ~/.nvm/nvm.sh
 nvm install 16
 node --version
 
@@ -52,3 +51,7 @@ mkdir -p /data/code-server/{extensions,data,workspace}
 apt clean
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* 
 chmod +x /usr/bin/entrypoint.sh /usr/bin/code-server
+
+echo 'cd /data/code-server/workspace' >> ~/.zshrc
+source ~/.zshrc
+
