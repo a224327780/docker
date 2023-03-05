@@ -1,6 +1,6 @@
 #!/bin/bash
 
-apt-get update && apt-get install --no-install-recommends ca-certificates zsh git vim wget curl net-tools -y 
+apt-get update && apt-get install --no-install-recommends ca-certificates vim wget curl net-tools -y 
 
 ARCH=$(dpkg --print-architecture)
 
@@ -27,10 +27,10 @@ chmod +x /usr/bin/code-server
 # echo "coder ALL=(ALL:ALL) ALL" >> /etc/sudoers
 
 # zsh
-sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
-chsh -s $(which zsh)
-echo 'alias ll=ls -la' >> ~/.zshrc
-echo 'alias vim=vim' >> ~/.zshrc
+# sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
+# chsh -s $(which zsh)
+# echo 'alias ll=ls -la' >> ~/.zshrc
+# echo 'alias vim=vim' >> ~/.zshrc
 
 # # nvm node
 # curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | zsh
