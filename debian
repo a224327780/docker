@@ -12,10 +12,9 @@ RUN apt-get update && apt-get install -y locales && \
     && echo "* soft nofile 65535" >> /etc/security/limits.conf \
     && echo "* hard nofile 65535" >> /etc/security/limits.conf \
     && echo "fs.file-max=65535" >> /etc/sysctl.conf \
-    && echo 'export LANG=zh_CN.UTF-8' >> /etc/profile \
-    && echo 'export LANGUAGE=zh_CN.UTF-8' >> /etc/profile \
-    && echo 'export LC_ALL=zh_CN.UTF-8' >> /etc/profile \
-    && /bin/bash -c 'source /etc/profile' \
+    && export LANG=zh_CN.UTF-8 \
+    && export LANGUAGE=zh_CN.UTF-8 \
+    && export LC_ALL=zh_CN.UTF-8 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /var/tmp/* 
     

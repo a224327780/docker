@@ -31,33 +31,41 @@ chsh -s $(which zsh)
 echo 'alias ll="ls -la"' >> ~/.zshrc
 echo 'alias vi="vim"' >> ~/.zshrc
 
+echo 'export LANG=zh_CN.UTF-8' >> ~/.zshrc
+echo 'export LANGUAGE=zh_CN.UTF-8' >> ~/.zshrc
+echo 'export LC_ALL=zh_CN.UTF-8' >> ~/.zshrc
+
 # git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZDOTDIR:-$HOME}/.oh-my-zsh/plugins/zsh-syntax-highlighting
 # echo "source ${ZDOTDIR:-$HOME}/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc
 
 # nvm node
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
-. ~/.nvm/nvm.sh
-nvm install 16
-node --version
+# . ~/.nvm/nvm.sh
+# nvm install 16
+# node --version
 
-echo "**** installing python3 dev environment ****"
-apt-get install -y \
-    build-essential \
-    libssl-dev \
-    libffi-dev \
-    python3-dev \
-    python3-pip \
-    python3-venv
-pip3 install -U pip
-python3 --version
+# echo "**** installing python3 dev environment ****"
+# apt-get install -y \
+#     build-essential \
+#     libssl-dev \
+#     libffi-dev \
+#     python3-dev \
+#     python3-pip \
+#     python3-venv
+# pip3 install -U pip
+# python3 --version
+
+curl https://pyenv.run | bash
+echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zshrc
+echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.zshrc
+echo 'eval "$(pyenv init -)"' >> ~/.zshrc
 
 mkdir -p /data/code-server/{extensions,data,workspace}
 # chown -R coder:coder /data/code-server 
-apt clean
+apt-get autoremove -y && apt clean
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* 
 chmod +x /usr/bin/entrypoint.sh /usr/bin/code-server
 
 echo 'cd /data/code-server/workspace' >> ~/.zshrc
-source /etc/profile
 source ~/.zshrc
 
