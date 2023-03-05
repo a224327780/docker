@@ -1,6 +1,6 @@
 #!/bin/bash
 
-apt-get update && apt-get install ca-certificates wget curl -y 
+apt-get update && apt-get install --no-install-recommends ca-certificates zsh git vim wget curl net-tools -y 
 
 ARCH=$(dpkg --print-architecture)
 
@@ -18,6 +18,7 @@ echo "${ARCH}-${CODE_RELEASE}"
 
 wget -nv --no-check-certificate -O /tmp/code-server.tar.gz "https://github.com/coder/code-server/releases/download/v${CODE_RELEASE}/code-server-${CODE_RELEASE}-linux-${ARCH}.tar.gz"
 tar xf /tmp/code-server.tar.gz -C /usr/local/ 
+rm -f /usr/bin/code-server
 ln -sf /usr/local/code-server-${CODE_RELEASE}/bin/code-server /usr/bin/code-server 
 chmod +x /usr/bin/code-server
 
@@ -27,10 +28,10 @@ chmod +x /usr/bin/code-server
 # echo "coder ALL=(ALL:ALL) ALL" >> /etc/sudoers
 
 # zsh
-# sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
-# chsh -s $(which zsh)
-# echo 'alias ll=ls -la' >> ~/.zshrc
-# echo 'alias vim=vim' >> ~/.zshrc
+sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
+chsh -s $(which zsh)
+echo 'alias ll=ls -la' >> ~/.zshrc
+echo 'alias vim=vim' >> ~/.zshrc
 
 # # nvm node
 # curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | zsh
@@ -46,6 +47,6 @@ chmod +x /usr/bin/code-server
 
 mkdir -p /data/code-server/{extensions,data,workspace}  
 # chown -R coder:coder /data/code-server 
-apt-get autoremove && apt-get clean
+apt-get autoremove && apt clean
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* 
 chmod +x /usr/bin/entrypoint.sh
