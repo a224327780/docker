@@ -1,6 +1,6 @@
 #!/bin/bash
 
-apt-get update && apt-get install --no-install-recommends ca-certificates zsh vim wget curl wget -y 
+apt-get update && apt-get install --no-install-recommends ca-certificates zsh git vim wget curl wget -y 
 
 ARCH=$(dpkg --print-architecture)
 
@@ -24,21 +24,27 @@ ln -s /usr/local/code-server-${CODE_RELEASE}/bin/code-server /usr/bin/code-serve
 # echo "coder ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
 # echo "coder ALL=(ALL:ALL) ALL" >> /etc/sudoers
 
+# zsh
+sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
+chsh -s $(which zsh)
+echo $0
+
 # nvm node
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+export NVM_DIR="$HOME/.nvm"
 nvm install 16
 node --version
 
 # python
 curl https://pyenv.run | bash
+echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zshrc
+echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.zshrc
+echo 'eval "$(pyenv init -)"' >> ~/.zshrc
+
 pyenv install 3.8
 python3 --version
 curl -o /tmp/get-pip.py https://bootstrap.pypa.io/get-pip.py
 python3 /tmp/get-pip.py
-
-# zsh
-sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
-chsh -s $(which zsh)
 
 mkdir -p /data/code-server/{extensions,data,workspace}  
 # chown -R coder:coder /data/code-server 
