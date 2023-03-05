@@ -1,6 +1,6 @@
 #!/bin/bash
 
-apt-get update && apt-get install --no-install-recommends ca-certificates vim wget curl net-tools -y 
+apt-get update && apt-get install ca-certificates wget curl -y 
 
 ARCH=$(dpkg --print-architecture)
 
