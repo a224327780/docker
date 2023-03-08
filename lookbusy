@@ -9,6 +9,12 @@ RUN apt update && apt install -y wget build-essential \
     && apt-get autoremove -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-    && lookbusy --version 
+    && lookbusy --version \
+    && echo "#!/bin/sh" >> /docker-entrypoint.sh \
+    && echo "set -e" >> /docker-entrypoint.sh \
+    && echo "exec "$@"" >> /docker-entrypoint.sh \
+    && chmod +x /docker-entrypoint.sh
 
-ENTRYPOINT ["ENTRYPOINT", "-c 50"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
+
+CMD ["lookbusy", "-c 30-80", "-r curve"]
