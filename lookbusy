@@ -17,4 +17,4 @@ RUN apt update && apt install -y wget build-essential \
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
-CMD ["lookbusy", "-c", "10-25", "-r", "curve", "-P", "300", "-m", "128MB", "-M", "5000"]
+CMD ["lookbusy", "-c", "10-25", "-r", "curve", "-p", "300", "-m", "128MB", "-M", "5000"]
