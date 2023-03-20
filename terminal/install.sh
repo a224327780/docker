@@ -12,20 +12,35 @@ echo 'alias vi="vim"' >>~/.zshrc
 echo 'export LANG=zh_CN.UTF-8' >>~/.zshrc
 echo 'export LANGUAGE=zh_CN.UTF-8' >>~/.zshrc
 echo 'export LC_ALL=zh_CN.UTF-8' >>~/.zshrc
+echo 'export SHELL=/bin/zsh' >>~/.zshrc
+echo 'export CLOUDFLARE_API_TOKEN=' >>~/.zshrc
+echo 'export CLOUDFLARE_ACCOUNT_ID=0b1b69fc601a0a377396a70e7149bb12' >>~/.zshrc
 
 echo "#!/bin/sh" >> /docker-entrypoint.sh
 echo "set -e" >> /docker-entrypoint.sh
 echo 'exec "$@"' >> /docker-entrypoint.sh
-cat >/README.md<<EOF
-- curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && apt-get install -y nodejs
-- apt-get install -y python3 python3-dev
-- curl -fsSL https://get.pnpm.io/install.sh | sh -
-- git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZDOTDIR:-$HOME}/.oh-my-zsh/plugins/zsh-syntax-highlighting
-- echo "source ${ZDOTDIR:-$HOME}/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc
+
+cat >/install.sh<<EOF
+#!/bin/sh
+  # curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && apt-get install -y nodejs
+  apt-get install -y python3
+  curl -o get-pip.py https://bootstrap.pypa.io/get-pip.py
+  apt install -y python3-distutils && python3 get-pip.py && rm -f get-pip.py
+  curl -fsSL https://get.pnpm.io/install.sh | sh -
+  # pnpm add -g wrangler
+  # curl https://get.okteto.com -sSfL | sh
+  # okteto context use https://cloud.okteto.com --token
+  # okteto pipeline deploy --namespace=atmaming01 --name terminal --branch=terminal --repository=https://github.com/a224327780/okteto-apps --wait
+  # git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZDOTDIR:-$HOME}/.oh-my-zsh/plugins/zsh-syntax-highlighting
+  # echo "source ${ZDOTDIR:-$HOME}/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc
 EOF
 
 apt-get autoremove -y && apt clean
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 chmod +x /docker-entrypoint.sh
+
+git config --global user.name "a224327780"
+git config --global user.email "a224327780@gmail.com"
+git config --global pull.rebase false
 
 source ~/.zshrc
