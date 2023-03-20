@@ -1,8 +1,12 @@
 #!/bin/bash
 GO_TTY_TAG_VER='v1.0.1'
+ARCH=$(dpkg --print-architecture)
+if [ "${ARCH}" = "arm64" ]; then
+    ARCH="arm"
+fi
 
 apt-get update && apt-get install --no-install-recommends ca-certificates openssh-client procps zsh git vim wget curl net-tools -y
-curl -sLk https://github.com/yudai/gotty/releases/download/${GO_TTY_TAG_VER}/gotty_linux_amd64.tar.gz | tar xzC /usr/local/bin
+curl -sLk https://github.com/yudai/gotty/releases/download/${GO_TTY_TAG_VER}/gotty_linux_${ARCH}.tar.gz | tar xzC /usr/local/bin
 
 # zsh
 sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
