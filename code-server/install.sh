@@ -23,6 +23,7 @@ echo 'export LANG=zh_CN.UTF-8' >> ~/.zshrc
 echo 'export LANGUAGE=zh_CN.UTF-8' >> ~/.zshrc
 echo 'export LC_ALL=zh_CN.UTF-8' >> ~/.zshrc
 echo 'export SHELL=/bin/zsh' >>~/.zshrc
+echo 'export VSCODE_PROXY_URI=https://{{port}}.web02.eu.org' >>~/.zshrc
 echo 'export CLOUDFLARE_API_TOKEN=' >>~/.zshrc
 echo 'export CLOUDFLARE_ACCOUNT_ID=0b1b69fc601a0a377396a70e7149bb12' >>~/.zshrc
 
