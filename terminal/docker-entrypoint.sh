@@ -10,4 +10,4 @@ if [ -n "${PORT}" ]; then
     port=${PORT}
 fi
 
-/usr/local/bin/gotty --port "${port}" --reconnect --credential root:"${pwd}" -w /bin/zsh -x
+/usr/local/bin/gotty --port "${port}" --reconnect --credential root:"${pwd}" -w /bin/zsh
