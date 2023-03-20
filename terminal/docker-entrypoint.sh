@@ -1,27 +1,9 @@
 #!/bin/sh
 set -e
 
-AUTH="none"
-if [ -n "${PASSWORD}" ]; then
-    AUTH="password"
+p=8080
+if [ -n "${PORT}" ]; then
+  p=${PORT}
 fi
 
-if [ -z ${PROXY_DOMAIN+x} ]; then
-	exec /usr/bin/code-server --bind-addr 0.0.0.0:7071 \
-		--user-data-dir /data/code-server/data \
-		--extensions-dir /data/code-server/extensions \
-		--app-name codespaces \
-		--disable-telemetry \
-		--auth "${AUTH}" \
-		/data/code-server/workspace 
-else
-    exec /usr/bin/code-server --bind-addr 0.0.0.0:7071 \
-		--user-data-dir /data/code-server/data \
-		--extensions-dir /data/code-server/extensions \
-		--app-name codespaces \
-		--disable-telemetry \
-		--auth "${AUTH}" \
-		--proxy-domain "${PROXY_DOMAIN}" \
-		/data/code-server/workspace 
-fi
-
+exec /usr/local/bin/gotty --permit-write --reconnect --port "${p}" /bin/zsh
