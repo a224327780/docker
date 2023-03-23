@@ -1,6 +1,6 @@
 #!/bin/bash
 
-apt-get update && apt-get install --no-install-recommends ca-certificates openssh-client zsh git vim wget curl net-tools -y 
+apt-get update && apt-get install --no-install-recommends ca-certificates openssh-client procps zsh git vim wget curl net-tools -y
 
 ARCH=$(dpkg --print-architecture)
 
@@ -23,12 +23,17 @@ echo 'export LANG=zh_CN.UTF-8' >> ~/.zshrc
 echo 'export LANGUAGE=zh_CN.UTF-8' >> ~/.zshrc
 echo 'export LC_ALL=zh_CN.UTF-8' >> ~/.zshrc
 echo 'export SHELL=/bin/zsh' >>~/.zshrc
-echo 'export VSCODE_PROXY_URI=https://{{port}}.web02.eu.org' >>~/.zshrc
 echo 'export CLOUDFLARE_API_TOKEN=' >>~/.zshrc
 echo 'export CLOUDFLARE_ACCOUNT_ID=0b1b69fc601a0a377396a70e7149bb12' >>~/.zshrc
+source ~/.zshrc
 
 apt-get install -y python3 python3-distutils
 curl -o get-pip.py https://bootstrap.pypa.io/get-pip.py && python3 get-pip.py && rm -f get-pip.py
+curl -fsSL https://get.pnpm.io/install.sh | sh -
+source ~/.zshrc
+
+pnpm env use 16 --global
+pnpm add -g wrangler
 
 cat >/data/code-server/workspace/install.sh<<EOF
 #!/bin/sh
