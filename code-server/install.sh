@@ -27,6 +27,9 @@ echo 'export VSCODE_PROXY_URI=https://{{port}}.web02.eu.org' >>~/.zshrc
 echo 'export CLOUDFLARE_API_TOKEN=' >>~/.zshrc
 echo 'export CLOUDFLARE_ACCOUNT_ID=0b1b69fc601a0a377396a70e7149bb12' >>~/.zshrc
 
+apt-get install -y python3 python3-distutils
+curl -o get-pip.py https://bootstrap.pypa.io/get-pip.py && python3 get-pip.py && rm -f get-pip.py
+
 cat >/data/code-server/workspace/install.sh<<EOF
 #!/bin/sh
   # curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && apt-get install -y nodejs
