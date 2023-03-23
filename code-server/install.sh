@@ -25,23 +25,19 @@ echo 'export LC_ALL=zh_CN.UTF-8' >> ~/.zshrc
 echo 'export SHELL=/bin/zsh' >>~/.zshrc
 echo 'export CLOUDFLARE_API_TOKEN=' >>~/.zshrc
 echo 'export CLOUDFLARE_ACCOUNT_ID=0b1b69fc601a0a377396a70e7149bb12' >>~/.zshrc
+
+sed -i 's/%c%/$PWD%/g' ~/.oh-my-zsh/themes/robbyrussell.zsh-theme
 source ~/.zshrc
 
-apt-get install -y python3 python3-distutils
-curl -o get-pip.py https://bootstrap.pypa.io/get-pip.py && python3 get-pip.py && rm -f get-pip.py
-curl -fsSL https://get.pnpm.io/install.sh | sh -
-source ~/.zshrc
-
-pnpm env use 16 --global
-pnpm add -g wrangler
+curl https://get.okteto.com -sSfL | sh
+curl -L https://fly.io/install.sh | sh
 
 cat >/data/code-server/workspace/install.sh<<EOF
 #!/bin/sh
   # curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && apt-get install -y nodejs
-  apt-get install -y python3 python3-distutils
-  curl -o get-pip.py https://bootstrap.pypa.io/get-pip.py && python3 get-pip.py && rm -f get-pip.py
+  apt update && apt-get install -y python3 python3-distutils && curl -o get-pip.py https://bootstrap.pypa.io/get-pip.py && python3 get-pip.py && rm -f get-pip.py
   curl -fsSL https://get.pnpm.io/install.sh | sh -
-  # pnpm add -g wrangler
+  # pnpm env use 16 --global && pnpm add -g wrangler
   # curl https://get.okteto.com -sSfL | sh
   # okteto context use https://cloud.okteto.com --token
   # okteto pipeline deploy --namespace=atmaming01 --name terminal --branch=terminal --repository=https://github.com/a224327780/okteto-apps --wait
