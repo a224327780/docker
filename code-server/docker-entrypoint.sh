@@ -6,8 +6,13 @@ if [ -n "${PASSWORD}" ]; then
     AUTH="password"
 fi
 
+port=7071
+if [ -n "${PORT}" ]; then
+    port=${PORT}
+fi
+
 if [ -z ${PROXY_DOMAIN+x} ]; then
-	exec /usr/bin/code-server --bind-addr 0.0.0.0:7071 \
+	exec /usr/bin/code-server --bind-addr 0.0.0.0:"${port}" \
 		--user-data-dir /data/code-server/data \
 		--extensions-dir /data/code-server/extensions \
 		--app-name codespaces \
@@ -15,7 +20,7 @@ if [ -z ${PROXY_DOMAIN+x} ]; then
 		--auth "${AUTH}" \
 		/data/code-server/workspace 
 else
-    exec /usr/bin/code-server --bind-addr 0.0.0.0:7071 \
+    exec /usr/bin/code-server --bind-addr 0.0.0.0:"${port}" \
 		--user-data-dir /data/code-server/data \
 		--extensions-dir /data/code-server/extensions \
 		--app-name codespaces \
