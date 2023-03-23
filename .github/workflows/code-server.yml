@@ -39,4 +39,4 @@ jobs:
          file: ./code-server/Dockerfile
          tags: |
            ghcr.io/a224327780/code-server:python
-           caoyfei/code-server:python
+           caoyufei/code-server:python
