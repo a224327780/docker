@@ -22,6 +22,6 @@ RUN apt-get update -y \
     && echo 'exec "$@"' >> /docker-entrypoint.sh \
     && chmod +x /docker-entrypoint.sh
 
-ENTRYPOINT ["/docker-entrypoint.sh"]
+# ENTRYPOINT ["/docker-entrypoint.sh"]
     
 CMD ["python3"]

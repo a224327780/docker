@@ -1,6 +1,6 @@
 #!/bin/bash
 
-apt-get update && apt-get install --no-install-recommends ca-certificates openssh-client procps zsh git vim wget curl net-tools -y
+apt-get update && apt-get install --no-install-recommends ca-certificates openssh-client procps zsh git vim wget curl net-tools iputils-ping -y
 
 ARCH=$(dpkg --print-architecture)
 
@@ -26,7 +26,7 @@ echo 'export SHELL=/bin/zsh' >>~/.zshrc
 echo 'export CLOUDFLARE_API_TOKEN=' >>~/.zshrc
 echo 'export CLOUDFLARE_ACCOUNT_ID=0b1b69fc601a0a377396a70e7149bb12' >>~/.zshrc
 
-sed -i 's/%c%/$PWD%/g' ~/.oh-my-zsh/themes/robbyrussell.zsh-theme
+echo "PROMPT='%F{cyan}%n%f@%F{green}%m:%F{yellow}%3~%f $(git_prompt_info)$ '" >> .oh-my-zsh/themes/robbyrussell.zsh-theme
 source ~/.zshrc
 
 curl https://get.okteto.com -sSfL | sh
