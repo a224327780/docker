@@ -16,12 +16,6 @@ RUN apt-get update -y \
     && apt-get purge wget make gcc g++ -y \
     && apt-get autoremove -y \
     && apt-get clean \
-    && cd .. && rm -rf Python-${PYTHON_VERSION} \
-    && echo "#!/bin/sh" >> /docker-entrypoint.sh \
-    && echo "set -e" >> /docker-entrypoint.sh \
-    && echo 'exec "$@"' >> /docker-entrypoint.sh \
-    && chmod +x /docker-entrypoint.sh
-
-# ENTRYPOINT ["/docker-entrypoint.sh"]
+    && cd .. && rm -rf Python-${PYTHON_VERSION} 
     
 CMD ["python3"]
