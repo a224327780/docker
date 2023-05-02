@@ -17,8 +17,9 @@ ln -sf "/usr/local/code-server-${CODE_RELEASE}-linux-${ARCH}/bin/code-server" /u
 sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
 chsh -s $(which zsh)
 
-wget --no-check-certificate -o /tmp/master.zip https://github.com/dracula/zsh/archive/master.zip
+wget --no-check-certificate -O /tmp/master.zip https://github.com/dracula/zsh/archive/master.zip
 unzip /tmp/master.zip -d /tmp
+ls -la /tmp
 mv /tmp/zsh-master/dracula.zsh-theme ~/.oh-my-zsh/themes/
 mv /tmp/zsh-master/lib/* ~/.oh-my-zsh/themes/lib/
  
