@@ -4,7 +4,7 @@ apt-get update && apt-get install --no-install-recommends ca-certificates openss
 
 ARCH=$(dpkg --print-architecture)
 
-CODE_RELEASE='4.11.0'
+CODE_RELEASE='4.12.0'
 
 #CODE_RELEASE=$(curl -sX GET https://api.github.com/repos/coder/code-server/releases/latest | awk '/tag_name/{print $4;exit}' FS='[""]' | sed 's|^v||')
 echo "${ARCH}-${CODE_RELEASE}"
@@ -62,15 +62,15 @@ if command -v pnpm >/dev/null 2>&1; then
   pnpm add -g wrangler
 fi
 
-mkdir -p /data/code-server/{extensions,data,workspace}
+mkdir -p ~/code-server/{extensions,data,workspace}
 apt-get autoremove -y && apt clean
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* 
 chmod +x /usr/bin/entrypoint.sh /usr/bin/code-server
 
-echo 'cd /data/code-server/workspace' >> ~/.zshrc
+echo 'cd ~/code-server/workspace' >> ~/.zshrc
 source ~/.zshrc
 
-cat >/data/code-server/workspace/INSTALL.md<<EOF
+cat > ~/code-server/workspace/INSTALL.md<<EOF
 curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && apt-get install -y nodejs
 apt update && apt-get install -y python3 python3-distutils && curl -o get-pip.py https://bootstrap.pypa.io/get-pip.py && python3 get-pip.py && rm -f get-pip.py
 curl -fsSL https://get.pnpm.io/install.sh | sh -
