@@ -76,5 +76,5 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZDOTDIR:-$H
 echo "source ${ZDOTDIR:-$HOME}/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc
 EOF
 
-apt-get autoremove -y && apt clean
+apt clean
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
