@@ -5,6 +5,6 @@ COPY code-server/install.sh /tmp/install.sh
 
 RUN chmod +x /tmp/install.sh && /bin/bash -c '/tmp/install.sh'
 
-WORKDIR /root/code-server/workspace
+WORKDIR /root/workspace
 
 CMD ["/usr/bin/entrypoint.sh"]

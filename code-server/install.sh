@@ -40,7 +40,7 @@ echo 'export CLOUDFLARE_ACCOUNT_ID=""' >>~/.zshrc
 echo 'DRACULA_DISPLAY_CONTEXT=1' >>~/.zshrc
 echo 'DRACULA_DISPLAY_FULL_CWD=1' >>~/.zshrc
 echo 'DRACULA_DISPLAY_GIT=1' >>~/.zshrc
-echo 'cd /root/code-server/workspace' >> ~/.zshrc
+echo 'cd /root/workspace' >> ~/.zshrc
 
 cat >~/.gitconfig<<EOF
 [user]
@@ -60,7 +60,7 @@ if command -v pnpm >/dev/null 2>&1; then
   pnpm add -g wrangler
 fi
 
-mkdir -p /root/code-server/{extensions,data,workspace} 
+mkdir -p /root/{extensions,user-data,workspace} 
 chmod +x /usr/bin/entrypoint.sh /usr/bin/code-server
 
 cat >/root/code-server/workspace/INSTALL.md<<EOF
