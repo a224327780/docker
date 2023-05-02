@@ -49,6 +49,8 @@ cat >~/.gitconfig<<EOF
         rebase = false
 EOF
 
+export SHELL=/bin/zsh
+
 curl https://get.okteto.com -sSfL | sh
 curl -L https://fly.io/install.sh | sh
 curl -fsSL https://get.pnpm.io/install.sh | sh -
