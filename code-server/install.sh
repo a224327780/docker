@@ -21,8 +21,7 @@ wget --no-check-certificate -O /tmp/master.zip https://github.com/dracula/zsh/ar
 unzip /tmp/master.zip -d /tmp
 ls -la /tmp
 mv /tmp/zsh-master/dracula.zsh-theme ~/.oh-my-zsh/themes/
-mkdir -p ~/.oh-my-zsh/themes/lib/
-mv /tmp/zsh-master/lib/* ~/.oh-my-zsh/themes/lib/
+mv /tmp/zsh-master/lib/ ~/.oh-my-zsh/themes/
  
 echo 'alias ll="ls -la"' >> ~/.zshrc
 echo 'alias vi="vim"' >> ~/.zshrc
@@ -59,15 +58,13 @@ if command -v pnpm >/dev/null 2>&1; then
   pnpm add -g wrangler
 fi
 
-mkdir -p ~/code-server/{extensions,data,workspace}
-apt-get autoremove -y && apt clean
-rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* 
+mkdir -p ~/code-server/{extensions,data,workspace} 
 chmod +x /usr/bin/entrypoint.sh /usr/bin/code-server
 
 echo 'cd ~/code-server/workspace' >> ~/.zshrc
 source ~/.zshrc
 
-cat > ~/code-server/workspace/INSTALL.md<<EOF
+cat >~/code-server/workspace/INSTALL.md<<EOF
 curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && apt-get install -y nodejs
 apt update && apt-get install -y python3 python3-distutils && curl -o get-pip.py https://bootstrap.pypa.io/get-pip.py && python3 get-pip.py && rm -f get-pip.py
 curl -fsSL https://get.pnpm.io/install.sh | sh -
@@ -79,3 +76,6 @@ okteto pipeline deploy --namespace=atmaming01 --name code-server --branch=code-s
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZDOTDIR:-$HOME}/.oh-my-zsh/plugins/zsh-syntax-highlighting
 echo "source ${ZDOTDIR:-$HOME}/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc
 EOF
+
+apt-get autoremove -y && apt clean
+rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
