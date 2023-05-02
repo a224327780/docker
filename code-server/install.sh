@@ -16,7 +16,16 @@ ln -sf "/usr/local/code-server-${CODE_RELEASE}-linux-${ARCH}/bin/code-server" /u
 # zsh
 sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
 chsh -s $(which zsh)
- 
+echo "current shell: $SHELL\n"
+
+wget --no-check-certificate -O /tmp/master.zip https://github.com/dracula/zsh/archive/master.zip
+unzip /tmp/master.zip -d /tmp
+ls -la /tmp
+mv /tmp/zsh-master/dracula.zsh-theme ~/.oh-my-zsh/themes/
+mv /tmp/zsh-master/lib/ ~/.oh-my-zsh/themes/
+
+sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="dracula"/g' ~/.zshrc 
+
 echo 'alias ll="ls -la"' >> ~/.zshrc
 echo 'alias vi="vim"' >> ~/.zshrc
 echo 'export FLYCTL_INSTALL="/root/.fly"' >> ~/.zshrc
@@ -30,7 +39,7 @@ echo 'export CLOUDFLARE_ACCOUNT_ID=""' >>~/.zshrc
 echo 'DRACULA_DISPLAY_CONTEXT=1' >>~/.zshrc
 echo 'DRACULA_DISPLAY_FULL_CWD=1' >>~/.zshrc
 echo 'DRACULA_DISPLAY_GIT=1' >>~/.zshrc
-source ~/.zshrc
+echo 'cd /root/code-server/workspace' >> ~/.zshrc
 
 cat >~/.gitconfig<<EOF
 [user]
@@ -44,7 +53,6 @@ curl https://get.okteto.com -sSfL | sh
 curl -L https://fly.io/install.sh | sh
 curl -fsSL https://get.pnpm.io/install.sh | sh -
 curl -o get-pip.py https://bootstrap.pypa.io/get-pip.py && python3 get-pip.py && rm -f get-pip.py
-source ~/.zshrc
 
 if command -v pnpm >/dev/null 2>&1; then
   pnpm env use 16 --global 
@@ -66,16 +74,6 @@ okteto pipeline deploy --namespace=atmaming01 --name code-server --branch=code-s
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZDOTDIR:-$HOME}/.oh-my-zsh/plugins/zsh-syntax-highlighting
 echo "source ${ZDOTDIR:-$HOME}/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc
 EOF
-
-wget --no-check-certificate -O /tmp/master.zip https://github.com/dracula/zsh/archive/master.zip
-unzip /tmp/master.zip -d /tmp
-ls -la /tmp
-mv /tmp/zsh-master/dracula.zsh-theme ~/.oh-my-zsh/themes/
-mv /tmp/zsh-master/lib/ ~/.oh-my-zsh/themes/
-
-sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="dracula"/g' ~/.zshrc 
-echo 'cd /root/code-server/workspace' >> ~/.zshrc
-source ~/.zshrc
 
 apt-get autoremove -y && apt clean
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
