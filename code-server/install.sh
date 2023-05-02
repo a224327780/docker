@@ -16,12 +16,6 @@ ln -sf "/usr/local/code-server-${CODE_RELEASE}-linux-${ARCH}/bin/code-server" /u
 # zsh
 sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
 chsh -s $(which zsh)
-
-wget --no-check-certificate -O /tmp/master.zip https://github.com/dracula/zsh/archive/master.zip
-unzip /tmp/master.zip -d /tmp
-ls -la /tmp
-mv /tmp/zsh-master/dracula.zsh-theme ~/.oh-my-zsh/themes/
-mv /tmp/zsh-master/lib/ ~/.oh-my-zsh/themes/
  
 echo 'alias ll="ls -la"' >> ~/.zshrc
 echo 'alias vi="vim"' >> ~/.zshrc
@@ -36,7 +30,6 @@ echo 'export CLOUDFLARE_ACCOUNT_ID=""' >>~/.zshrc
 echo 'DRACULA_DISPLAY_CONTEXT=1' >>~/.zshrc
 echo 'DRACULA_DISPLAY_FULL_CWD=1' >>~/.zshrc
 echo 'DRACULA_DISPLAY_GIT=1' >>~/.zshrc
-sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="dracula"/g' ~/.zshrc 
 source ~/.zshrc
 
 cat >~/.gitconfig<<EOF
@@ -58,13 +51,10 @@ if command -v pnpm >/dev/null 2>&1; then
   pnpm add -g wrangler
 fi
 
-mkdir -p ~/code-server/{extensions,data,workspace} 
+mkdir -p /root/code-server/{extensions,data,workspace} 
 chmod +x /usr/bin/entrypoint.sh /usr/bin/code-server
 
-echo 'cd ~/code-server/workspace' >> ~/.zshrc
-source ~/.zshrc
-
-cat >~/code-server/workspace/INSTALL.md<<EOF
+cat >/root/code-server/workspace/INSTALL.md<<EOF
 curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && apt-get install -y nodejs
 apt update && apt-get install -y python3 python3-distutils && curl -o get-pip.py https://bootstrap.pypa.io/get-pip.py && python3 get-pip.py && rm -f get-pip.py
 curl -fsSL https://get.pnpm.io/install.sh | sh -
@@ -76,6 +66,16 @@ okteto pipeline deploy --namespace=atmaming01 --name code-server --branch=code-s
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZDOTDIR:-$HOME}/.oh-my-zsh/plugins/zsh-syntax-highlighting
 echo "source ${ZDOTDIR:-$HOME}/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc
 EOF
+
+wget --no-check-certificate -O /tmp/master.zip https://github.com/dracula/zsh/archive/master.zip
+unzip /tmp/master.zip -d /tmp
+ls -la /tmp
+mv /tmp/zsh-master/dracula.zsh-theme ~/.oh-my-zsh/themes/
+mv /tmp/zsh-master/lib/ ~/.oh-my-zsh/themes/
+
+sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="dracula"/g' ~/.zshrc 
+echo 'cd /root/code-server/workspace' >> ~/.zshrc
+source ~/.zshrc
 
 apt-get autoremove -y && apt clean
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
