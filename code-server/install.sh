@@ -16,6 +16,7 @@ ln -sf "/usr/local/code-server-${CODE_RELEASE}-linux-${ARCH}/bin/code-server" /u
 # zsh
 sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
 chsh -s $(which zsh)
+export SHELL=$(which zsh)
 echo "current shell: $SHELL\n"
 
 wget --no-check-certificate -O /tmp/master.zip https://github.com/dracula/zsh/archive/master.zip
@@ -48,8 +49,6 @@ cat >~/.gitconfig<<EOF
 [pull]
         rebase = false
 EOF
-
-export SHELL=/bin/zsh
 
 curl https://get.okteto.com -sSfL | sh
 curl -L https://fly.io/install.sh | sh
