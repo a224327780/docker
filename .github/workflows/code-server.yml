@@ -37,4 +37,6 @@ jobs:
          push: true
          platforms: linux/amd64,linux/arm64
          file: ./code-server/Dockerfile
-         tags: ghcr.io/a224327780/code-server:latest
+         tags: |
+           ghcr.io/a224327780/code-server:latest
+           caoyufei/code-server:latest

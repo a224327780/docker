@@ -1,6 +1,6 @@
 #!/bin/bash
 
-apt-get update && apt-get install --no-install-recommends ca-certificates openssh-client procps zsh git vim wget curl net-tools iputils-ping python3 python3-distutils -y
+apt-get update && apt-get install --no-install-recommends ca-certificates openssh-client procps zsh git unzip vim wget curl net-tools iputils-ping python3 python3-distutils -y
 
 ARCH=$(dpkg --print-architecture)
 
@@ -16,6 +16,14 @@ ln -sf "/usr/local/code-server-${CODE_RELEASE}-linux-${ARCH}/bin/code-server" /u
 # zsh
 sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
 chsh -s $(which zsh)
+
+curl -o /tmp/master.zip https://github.com/dracula/zsh/archive/master.zip
+unzip /tmp/master.zip -d /tmp
+mv /tmp/zsh-master/dracula.zsh-theme ~/.oh-my-zsh/themes/
+mv /tmp/zsh-master/lib/* ~/.oh-my-zsh/themes/lib/
+
+rm -rf /tmp/master.zip /tmp/zsh-master
+ 
 echo 'alias ll="ls -la"' >> ~/.zshrc
 echo 'alias vi="vim"' >> ~/.zshrc
 echo 'export FLYCTL_INSTALL="/root/.fly"' >> ~/.zshrc
@@ -28,13 +36,15 @@ echo 'export CLOUDFLARE_API_TOKEN=""' >>~/.zshrc
 echo 'export CLOUDFLARE_ACCOUNT_ID=""' >>~/.zshrc
 echo 'export CF_Token=""' >>~/.zshrc
 echo 'export CF_Account_ID=""' >>~/.zshrc
-echo "PROMPT='%F{cyan}%n%f@%F{green}%m:%F{yellow}%3~%f $(git_prompt_info)$ '" >> .oh-my-zsh/themes/robbyrussell.zsh-theme
+echo 'DRACULA_DISPLAY_CONTEXT=1' >>~/.zshrc
+echo 'DRACULA_DISPLAY_FULL_CWD=1' >>~/.zshrc
+echo 'DRACULA_DISPLAY_GIT=1' >>~/.zshrc
 source ~/.zshrc
 
 cat >~/.gitconfig<<EOF
 [user]
-        name = a224327780
-        email = a224327780@gmail.com
+        name = atcaoyufei
+        email = atcaoyufei@gmail.com
 [pull]
         rebase = false
 EOF
