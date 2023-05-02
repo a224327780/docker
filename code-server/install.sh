@@ -39,6 +39,7 @@ echo 'export CF_Account_ID=""' >>~/.zshrc
 echo 'DRACULA_DISPLAY_CONTEXT=1' >>~/.zshrc
 echo 'DRACULA_DISPLAY_FULL_CWD=1' >>~/.zshrc
 echo 'DRACULA_DISPLAY_GIT=1' >>~/.zshrc
+sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="dracula"/g' ~/.zshrc \
 source ~/.zshrc
 
 cat >~/.gitconfig<<EOF
@@ -76,7 +77,7 @@ curl -fsSL https://get.pnpm.io/install.sh | sh -
 pnpm env use 16 --global && pnpm add -g wrangler
 curl https://get.okteto.com -sSfL | sh
 okteto context use https://cloud.okteto.com --token
-okteto pipeline deploy --namespace=atmaming01 --name terminal --branch=terminal --repository=https://github.com/a224327780/okteto-apps --wait
+okteto pipeline deploy --namespace=atmaming01 --name code-server --branch=code-server --repository=https://github.com/a224327780/okteto-apps --wait
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZDOTDIR:-$HOME}/.oh-my-zsh/plugins/zsh-syntax-highlighting
 echo "source ${ZDOTDIR:-$HOME}/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc
 EOF
