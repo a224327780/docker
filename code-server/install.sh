@@ -55,6 +55,12 @@ curl -L https://fly.io/install.sh | sh
 curl -fsSL https://get.pnpm.io/install.sh | sh -
 curl -o get-pip.py https://bootstrap.pypa.io/get-pip.py && python3 get-pip.py && rm -f get-pip.py
 
+export PNPM_HOME="/root/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+
 if command -v pnpm >/dev/null 2>&1; then
   pnpm env use 16 --global 
   pnpm add -g wrangler
