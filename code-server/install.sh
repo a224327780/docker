@@ -21,6 +21,7 @@ wget --no-check-certificate -O /tmp/master.zip https://github.com/dracula/zsh/ar
 unzip /tmp/master.zip -d /tmp
 ls -la /tmp
 mv /tmp/zsh-master/dracula.zsh-theme ~/.oh-my-zsh/themes/
+mkdir -p ~/.oh-my-zsh/themes/lib/
 mv /tmp/zsh-master/lib/* ~/.oh-my-zsh/themes/lib/
  
 echo 'alias ll="ls -la"' >> ~/.zshrc
