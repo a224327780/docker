@@ -13,20 +13,20 @@ fi
 
 if [ -z ${PROXY_DOMAIN+x} ]; then
 	exec /usr/bin/code-server --bind-addr 0.0.0.0:"${port}" \
-		--user-data-dir /data/code-server/data \
-		--extensions-dir /data/code-server/extensions \
+		--user-data-dir ~/code-server/data \
+		--extensions-dir ~/code-server/extensions \
 		--app-name codespaces \
 		--disable-telemetry \
 		--auth "${AUTH}" \
-		/data/code-server/workspace 
+		~/code-server/workspace 
 else
     exec /usr/bin/code-server --bind-addr 0.0.0.0:"${port}" \
-		--user-data-dir /data/code-server/data \
-		--extensions-dir /data/code-server/extensions \
+		--user-data-dir ~/code-server/data \
+		--extensions-dir ~/code-server/extensions \
 		--app-name codespaces \
 		--disable-telemetry \
 		--auth "${AUTH}" \
 		--proxy-domain "${PROXY_DOMAIN}" \
-		/data/code-server/workspace 
+		~/code-server/workspace 
 fi
 
