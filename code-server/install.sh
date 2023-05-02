@@ -34,12 +34,10 @@ echo 'export LC_ALL=zh_CN.UTF-8' >> ~/.zshrc
 echo 'export SHELL=/bin/zsh' >>~/.zshrc
 echo 'export CLOUDFLARE_API_TOKEN=""' >>~/.zshrc
 echo 'export CLOUDFLARE_ACCOUNT_ID=""' >>~/.zshrc
-echo 'export CF_Token=""' >>~/.zshrc
-echo 'export CF_Account_ID=""' >>~/.zshrc
 echo 'DRACULA_DISPLAY_CONTEXT=1' >>~/.zshrc
 echo 'DRACULA_DISPLAY_FULL_CWD=1' >>~/.zshrc
 echo 'DRACULA_DISPLAY_GIT=1' >>~/.zshrc
-sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="dracula"/g' ~/.zshrc \
+sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="dracula"/g' ~/.zshrc 
 source ~/.zshrc
 
 cat >~/.gitconfig<<EOF
@@ -50,7 +48,6 @@ cat >~/.gitconfig<<EOF
         rebase = false
 EOF
 
-curl https://get.acme.sh | sh -s email=atcaoyufei@gmail.com
 curl https://get.okteto.com -sSfL | sh
 curl -L https://fly.io/install.sh | sh
 curl -fsSL https://get.pnpm.io/install.sh | sh -
@@ -74,6 +71,7 @@ cat > ~/code-server/workspace/INSTALL.md<<EOF
 curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && apt-get install -y nodejs
 apt update && apt-get install -y python3 python3-distutils && curl -o get-pip.py https://bootstrap.pypa.io/get-pip.py && python3 get-pip.py && rm -f get-pip.py
 curl -fsSL https://get.pnpm.io/install.sh | sh -
+curl https://get.acme.sh | sh -s email=atcaoyufei@gmail.com
 pnpm env use 16 --global && pnpm add -g wrangler
 curl https://get.okteto.com -sSfL | sh
 okteto context use https://cloud.okteto.com --token
