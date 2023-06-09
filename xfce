@@ -1,0 +1,5 @@
+FROM consol/debian-xfce-vnc
+
+ENV VNC_PW=admin001
+
+RUN rm -f $NO_VNC_HOME/index.html && ln -s $NO_VNC_HOME/vnc.html $NO_VNC_HOME/index.html
