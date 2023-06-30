@@ -4,7 +4,7 @@ apt-get update && apt-get install --no-install-recommends ca-certificates openss
 
 ARCH=$(dpkg --print-architecture)
 
-CODE_RELEASE='4.12.0'
+CODE_RELEASE='4.14.1'
 
 #CODE_RELEASE=$(curl -sX GET https://api.github.com/repos/coder/code-server/releases/latest | awk '/tag_name/{print $4;exit}' FS='[""]' | sed 's|^v||')
 echo "${ARCH}-${CODE_RELEASE}"
@@ -12,6 +12,10 @@ echo "${ARCH}-${CODE_RELEASE}"
 curl -o /tmp/code-server.tar.gz -L "https://github.com/coder/code-server/releases/download/v${CODE_RELEASE}/code-server-${CODE_RELEASE}-linux-${ARCH}.tar.gz"
 tar zxf /tmp/code-server.tar.gz -C /usr/local/ 
 ln -sf "/usr/local/code-server-${CODE_RELEASE}-linux-${ARCH}/bin/code-server" /usr/bin/code-server
+
+# golang
+curl -o /tmp/go-linux.tar.gz -L "https://go.dev/dl/go1.20.5.linux-${ARCH}.tar.gz"
+tar zxf /tmp/go-linux.tar.gz -C /usr/local/
 
 # zsh
 sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
@@ -33,14 +37,14 @@ echo 'export FLYCTL_INSTALL="/root/.fly"' >> ~/.zshrc
 echo 'export PATH="$FLYCTL_INSTALL/bin:$PATH"' >> ~/.zshrc
 echo 'export LANG=zh_CN.UTF-8' >> ~/.zshrc
 echo 'export LANGUAGE=zh_CN.UTF-8' >> ~/.zshrc
-echo 'export LC_ALL=zh_CN.UTF-8' >> ~/.zshrc
 echo 'export SHELL=/bin/zsh' >>~/.zshrc
 echo 'export CLOUDFLARE_API_TOKEN=""' >>~/.zshrc
 echo 'export CLOUDFLARE_ACCOUNT_ID=""' >>~/.zshrc
+echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.zshrc
 echo 'DRACULA_DISPLAY_CONTEXT=1' >>~/.zshrc
 echo 'DRACULA_DISPLAY_FULL_CWD=1' >>~/.zshrc
 echo 'DRACULA_DISPLAY_GIT=1' >>~/.zshrc
-echo 'cd /root/workspace' >> ~/.zshrc
+echo 'cd /data/code-server/workspace' >> ~/.zshrc
 
 cat >~/.gitconfig<<EOF
 [user]
@@ -66,7 +70,7 @@ if command -v pnpm >/dev/null 2>&1; then
   pnpm add -g wrangler
 fi
 
-mkdir -p ~/{extensions,user-data,workspace} 
+mkdir -p ~/data/code-server/{extensions,user-data,workspace} 
 chmod +x /usr/bin/entrypoint.sh /usr/bin/code-server
 
 cat >~/code-server/workspace/INSTALL.md<<EOF

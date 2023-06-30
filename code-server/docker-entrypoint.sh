@@ -12,9 +12,9 @@ if [ -n "${PORT}" ]; then
 fi
 
 exec /usr/bin/code-server --bind-addr 0.0.0.0:"${port}" \
-	--user-data-dir ~/user-data \
-	--extensions-dir ~/extensions \
+	--user-data-dir /data/code-server/user-data \
+	--extensions-dir /data/code-server/extensions \
 	--app-name codespaces \
 	--disable-telemetry \
-	--auth "${AUTH}" ~/workspace
+	--auth "${AUTH}" /data/code-server/workspace
 
