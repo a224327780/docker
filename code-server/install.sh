@@ -16,6 +16,8 @@ ln -sf "/usr/local/code-server-${CODE_RELEASE}-linux-${ARCH}/bin/code-server" /u
 # golang
 curl -o /tmp/go-linux.tar.gz -L "https://go.dev/dl/go1.20.5.linux-${ARCH}.tar.gz"
 tar zxf /tmp/go-linux.tar.gz -C /usr/local/
+export PATH=$PATH:/usr/local/go/bin
+go version
 
 # zsh
 sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
@@ -56,6 +58,7 @@ EOF
 
 curl https://get.okteto.com -sSfL | sh
 curl -L https://fly.io/install.sh | sh
+curl -fsSL https://deno.land/x/install/install.sh | sh
 curl -fsSL https://get.pnpm.io/install.sh | sh -
 curl -o get-pip.py https://bootstrap.pypa.io/get-pip.py && python3 get-pip.py && rm -f get-pip.py
 
@@ -68,12 +71,13 @@ esac
 if command -v pnpm >/dev/null 2>&1; then
   pnpm env use 16 --global 
   pnpm add -g wrangler
+  wrangler --version
 fi
 
-mkdir -p ~/data/code-server/{extensions,user-data,workspace} 
+mkdir -p /data/code-server/{extensions,user-data,workspace} 
 chmod +x /usr/bin/entrypoint.sh /usr/bin/code-server
 
-cat >~/code-server/workspace/INSTALL.md<<EOF
+cat >~/data/code-server/workspace/INSTALL.md<<EOF
 curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && apt-get install -y nodejs
 apt update && apt-get install -y python3 python3-distutils && curl -o get-pip.py https://bootstrap.pypa.io/get-pip.py && python3 get-pip.py && rm -f get-pip.py
 curl -fsSL https://get.pnpm.io/install.sh | sh -
