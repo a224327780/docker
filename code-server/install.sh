@@ -43,6 +43,7 @@ echo 'export SHELL=/bin/zsh' >>~/.zshrc
 echo 'export CLOUDFLARE_API_TOKEN=""' >>~/.zshrc
 echo 'export CLOUDFLARE_ACCOUNT_ID=""' >>~/.zshrc
 echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.zshrc
+echo 'export GOPATH=/data/go' >> ~/.zshrc
 echo 'DRACULA_DISPLAY_CONTEXT=1' >>~/.zshrc
 echo 'DRACULA_DISPLAY_FULL_CWD=1' >>~/.zshrc
 echo 'DRACULA_DISPLAY_GIT=1' >>~/.zshrc
@@ -62,7 +63,9 @@ curl https://get.okteto.com -sSfL | sh
 curl -L https://fly.io/install.sh | sh
 curl -fsSL https://deno.land/x/install/install.sh | sh
 curl -fsSL https://get.pnpm.io/install.sh | sh -
+
 curl -o get-pip.py https://bootstrap.pypa.io/get-pip.py && python3 get-pip.py && rm -f get-pip.py
+pip install --no-cache-dir requests pyquery motor python-dotenv redis aioredis aiohttp pyyaml sanic ruia pyppeteer
 
 export PNPM_HOME="/root/.local/share/pnpm"
 case ":$PATH:" in
