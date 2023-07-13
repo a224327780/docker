@@ -65,7 +65,16 @@ curl -fsSL https://deno.land/x/install/install.sh | sh
 curl -fsSL https://get.pnpm.io/install.sh | sh -
 
 curl -o get-pip.py https://bootstrap.pypa.io/get-pip.py && python3 get-pip.py && rm -f get-pip.py
-pip install --no-cache-dir requests pyquery motor python-dotenv redis aioredis aiohttp pyyaml sanic ruia pyppeteer
+pip install --no-cache-dir requests pyquery motor python-dotenv redis bottle aioredis aiosocksy aiomysql rsa aiohttp pyyaml sanic ruia pyppeteer pysocks
+
+if [ -d "/root/.deno" ]; then
+  export DENO_INSTALL="/root/.deno"
+  export PATH="$DENO_INSTALL/bin:$PATH"
+  deno install --allow-all --no-check -r -f https://deno.land/x/deploy/deployctl.ts
+	echo "export DENO_INSTALL=\"/root/.deno\"" >> ~/.zshrc
+	echo "export PATH=\"\$DENO_INSTALL/bin:\$PATH\"" >> ~/.zshrc
+  echo 'export DENO_DEPLOY_TOKEN=""' >>~/.zshrc
+fi
 
 export PNPM_HOME="/root/.local/share/pnpm"
 case ":$PATH:" in
