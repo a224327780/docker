@@ -4,7 +4,7 @@ apt-get update && apt-get install --no-install-recommends ca-certificates openss
 
 ARCH=$(dpkg --print-architecture)
 
-CODE_RELEASE='4.17.1'
+CODE_RELEASE='4.22.0'
 
 #CODE_RELEASE=$(curl -sX GET https://api.github.com/repos/coder/code-server/releases/latest | awk '/tag_name/{print $4;exit}' FS='[""]' | sed 's|^v||')
 echo "${ARCH}-${CODE_RELEASE}"
@@ -42,7 +42,6 @@ echo 'export LANGUAGE=zh_CN.UTF-8' >> ~/.zshrc
 echo 'export SHELL=/bin/zsh' >>~/.zshrc
 echo 'export CLOUDFLARE_API_TOKEN=""' >>~/.zshrc
 echo 'export CLOUDFLARE_ACCOUNT_ID=""' >>~/.zshrc
-echo 'export OKTETO_TOKEN=""' >>~/.zshrc
 echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.zshrc
 echo 'export GOPATH=/data/go' >> ~/.zshrc
 echo 'DRACULA_DISPLAY_CONTEXT=1' >>~/.zshrc
@@ -58,9 +57,8 @@ cat >~/.gitconfig<<EOF
         rebase = false
 EOF
 
-bash <(curl -fsSL cli.new) -y
+# bash <(curl -fsSL cli.new) -y
 curl https://rclone.org/install.sh | bash
-curl https://get.okteto.com -sSfL | sh
 curl -L https://fly.io/install.sh | sh
 curl -fsSL https://deno.land/x/install/install.sh | sh
 curl -fsSL https://get.pnpm.io/install.sh | sh -
@@ -84,7 +82,7 @@ case ":$PATH:" in
 esac
 
 if command -v pnpm >/dev/null 2>&1; then
-  pnpm env use 16 --global 
+  pnpm env use 18 --global 
   pnpm add -g wrangler
   wrangler --version
 fi
@@ -93,10 +91,7 @@ mkdir -p /data/code-server/{extensions,user-data,workspace}
 chmod +x /usr/bin/entrypoint.sh /usr/bin/code-server
 
 cat >/data/code-server/workspace/NOTE.md<<EOF
-curl https://get.acme.sh | sh -s email=atcaoyufei@gmail.com
-
-okteto context use https://cloud.okteto.com --token
-okteto pipeline deploy --namespace=atcooc123 --name code --branch=master --file okteto/code/docker-compose.yaml --repository=https://github.com/a224327780/paas --wait
+curl https://get.acme.sh | sh 
 
 flyctl launch --force-machines --image louislam/uptime-kuma:1 --name uptime001 --region hkg --internal-port 3001 --now
 
