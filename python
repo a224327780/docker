@@ -1,6 +1,6 @@
 FROM ghcr.io/a224327780/debian
 
-ENV PYTHON_VERSION=3.8.16 DEBIAN_FRONTEND=noninteractive
+ENV PYTHON_VERSION=3.9.17 DEBIAN_FRONTEND=noninteractive
 ENV PATH=$PATH:/usr/local/python3/bin
 
 RUN apt-get update -y \
