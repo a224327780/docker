@@ -4,7 +4,7 @@ apt-get update && apt-get install --no-install-recommends ca-certificates openss
 
 ARCH=$(dpkg --print-architecture)
 
-CODE_RELEASE='4.22.0'
+CODE_RELEASE='4.22.1'
 
 #CODE_RELEASE=$(curl -sX GET https://api.github.com/repos/coder/code-server/releases/latest | awk '/tag_name/{print $4;exit}' FS='[""]' | sed 's|^v||')
 echo "${ARCH}-${CODE_RELEASE}"
@@ -32,6 +32,14 @@ mv /tmp/zsh-master/dracula.zsh-theme ~/.oh-my-zsh/themes/
 mv /tmp/zsh-master/lib/ ~/.oh-my-zsh/themes/
 
 sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="dracula"/g' ~/.zshrc 
+
+cat >~/.vimrc<<EOF
+syntax on
+set encoding=utf-8
+set smartindent
+set wrap
+set ruler
+EOF
 
 echo 'alias ll="ls -la"' >> ~/.zshrc
 echo 'alias vi="vim"' >> ~/.zshrc
