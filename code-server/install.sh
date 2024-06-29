@@ -4,7 +4,7 @@ apt-get update && apt-get install --no-install-recommends ca-certificates openss
 
 ARCH=$(dpkg --print-architecture)
 
-CODE_RELEASE='4.22.1'
+CODE_RELEASE='4.90.3'
 
 #CODE_RELEASE=$(curl -sX GET https://api.github.com/repos/coder/code-server/releases/latest | awk '/tag_name/{print $4;exit}' FS='[""]' | sed 's|^v||')
 echo "${ARCH}-${CODE_RELEASE}"
