@@ -87,7 +87,7 @@ case ":$PATH:" in
 esac
 
 if command -v pnpm >/dev/null 2>&1; then
-  pnpm env use 18 --global 
+  pnpm env use 20 --global 
   pnpm add -g wrangler
   wrangler --version
 fi
