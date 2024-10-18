@@ -4,7 +4,7 @@ apt-get update && apt-get install --no-install-recommends ca-certificates openss
 
 ARCH=$(dpkg --print-architecture)
 
-CODE_RELEASE='4.91.1'
+CODE_RELEASE='4.93.1'
 
 #CODE_RELEASE=$(curl -sX GET https://api.github.com/repos/coder/code-server/releases/latest | awk '/tag_name/{print $4;exit}' FS='[""]' | sed 's|^v||')
 echo "${ARCH}-${CODE_RELEASE}"
@@ -43,8 +43,6 @@ EOF
 
 echo 'alias ll="ls -la"' >> ~/.zshrc
 echo 'alias vi="vim"' >> ~/.zshrc
-echo 'export FLYCTL_INSTALL="/root/.fly"' >> ~/.zshrc
-echo 'export PATH="$FLYCTL_INSTALL/bin:$PATH"' >> ~/.zshrc
 echo 'export LANG=zh_CN.UTF-8' >> ~/.zshrc
 echo 'export LANGUAGE=zh_CN.UTF-8' >> ~/.zshrc
 echo 'export SHELL=/bin/zsh' >>~/.zshrc
@@ -67,7 +65,6 @@ EOF
 
 # bash <(curl -fsSL cli.new) -y
 curl https://rclone.org/install.sh | bash
-curl -L https://fly.io/install.sh | sh
 curl -fsSL https://deno.land/x/install/install.sh | sh
 curl -fsSL https://get.pnpm.io/install.sh | sh -
 
