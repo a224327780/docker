@@ -17,7 +17,6 @@ RUN apt-get update && apt-get install -y locales ntp && \
     && export LANGUAGE=zh_CN.UTF-8 \
     && export LC_ALL=zh_CN.UTF-8 \
     && apt-get clean \
-    && systemctl enable ntp \
     && rm -rf /var/lib/apt/lists/* /var/tmp/* 
     
 CMD ["bash"]
