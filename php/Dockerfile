@@ -13,7 +13,7 @@ RUN apt-get update -y \
     && CONFIG="\
     --prefix=/usr/local/php --with-config-file-path=/usr/local/php/etc --with-config-file-scan-dir=/usr/local/php/conf.d --enable-fpm --with-fpm-user=www --with-fpm-group=www --enable-mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-iconv-dir --with-freetype-dir=/usr/local/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl --enable-mbregex --enable-mbstring --enable-intl --enable-pcntl --enable-ftp --with-gd --with-openssl  --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --without-libzip --enable-soap --with-gettext --enable-opcache --with-xsl --with-pear --disable-fileinfo" \
     && cd /tmp \
-    && wget -nv --no-check-certificate https://download.savannah.gnu.org/releases/freetype/freetype-${Freetype_New_Ver}.tar.xz \
+    && wget -nv --no-check-certificate https://download.savannah.gnu.org/releases/freetype/${Freetype_New_Ver}.tar.xz \
     && tar Jxf ${Freetype_New_Ver}.tar.xz \
     && cd /tmp/${Freetype_New_Ver} \
     && ./configure --prefix=/usr/local/freetype --enable-freetype-config\
