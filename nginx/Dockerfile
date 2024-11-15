@@ -26,9 +26,9 @@ RUN apt-get update -y \
     && groupadd www \
     && useradd -s /sbin/nologin -g www www \
     && cd /tmp \
-    && wget -c --progress=bar:force --prefer-family=IPv4 --no-check-certificate http://soft2.vpser.net/lib/openssl/${OPENSSL_VERSION}.tar.gz \
+    && wget -c --progress=bar:force --prefer-family=IPv4 --no-check-certificate https://openssl.org/source/old/1.1.1/${OPENSSL_VERSION}.tar.gz \
     && tar zxf ${OPENSSL_VERSION}.tar.gz \
-    && wget -nv http://soft2.vpser.net/web/nginx/${NGINX_VERSION}.tar.gz \
+    && wget -nv https://nginx.org/download/${NGINX_VERSION}.tar.gz \
     && tar -zxf ${NGINX_VERSION}.tar.gz \
     && cd /tmp/${NGINX_VERSION} \
     && ./configure ${CONFIG} \

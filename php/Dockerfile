@@ -13,7 +13,7 @@ RUN apt-get update -y \
     && CONFIG="\
     --prefix=/usr/local/php --with-config-file-path=/usr/local/php/etc --with-config-file-scan-dir=/usr/local/php/conf.d --enable-fpm --with-fpm-user=www --with-fpm-group=www --enable-mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-iconv-dir --with-freetype-dir=/usr/local/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl --enable-mbregex --enable-mbstring --enable-intl --enable-pcntl --enable-ftp --with-gd --with-openssl  --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --without-libzip --enable-soap --with-gettext --enable-opcache --with-xsl --with-pear --disable-fileinfo" \
     && cd /tmp \
-    && wget -nv --no-check-certificate http://soft.vpser.net/lib/freetype/${Freetype_New_Ver}.tar.xz \
+    && wget -nv --no-check-certificate https://download.savannah.gnu.org/releases/freetype/freetype-${Freetype_New_Ver}.tar.xz \
     && tar Jxf ${Freetype_New_Ver}.tar.xz \
     && cd /tmp/${Freetype_New_Ver} \
     && ./configure --prefix=/usr/local/freetype --enable-freetype-config\
@@ -26,7 +26,7 @@ RUN apt-get update -y \
     && groupadd www \
     && useradd -s /sbin/nologin -g www www \
     && cd /tmp \
-    && wget -c --progress=bar:force --prefer-family=IPv4 --no-check-certificate https://soft.vpser.net/web/php/${PHP_VERSION}.tar.bz2 \
+    && wget -c --progress=bar:force --prefer-family=IPv4 --no-check-certificate https://www.php.net/distributions/${PHP_VERSION}.tar.bz2 \
     && tar xjf ${PHP_VERSION}.tar.bz2 \
     && cd /tmp/${PHP_VERSION} \
     && ./configure $CONFIG \
@@ -73,7 +73,7 @@ RUN apt-get update -y \
     && make install \
     && cp /tmp/conf/007-redis.ini /usr/local/php/conf.d/007-redis.ini \
     && install -m 755 /tmp/conf/fpm-configure /usr/local/bin/fpm-configure \
-    && wget --prefer-family=IPv4 --no-check-certificate -T 120 -t3 https://getcomposer.org/download/1.10.10/composer.phar -O /usr/local/bin/composer \
+    && wget --prefer-family=IPv4 --no-check-certificate -T 120 -t3 https://getcomposer.org/download/2.8.1/composer.phar -O /usr/local/bin/composer \
     && chmod +x /usr/local/bin/composer \
     && composer --version && php --version \
     && apt-get purge --auto-remove binutils autoconf dpkg-dev g++ gcc libc-dev make pkg-config re2c wget curl -y \
