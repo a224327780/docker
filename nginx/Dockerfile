@@ -4,7 +4,6 @@ ENV NGINX_VERSION=nginx-1.20.1 OPENSSL_VERSION=openssl-1.1.1k DEBIAN_FRONTEND=no
 ENV PATH=$PATH:/usr/local/nginx/sbin WWW_ROOT=/data/wwwroot/default
 
 ADD nginx/conf /tmp/conf
-
 COPY nginx/docker-entrypoint.sh /docker-entrypoint.sh
 
 RUN apt-get update -y \
