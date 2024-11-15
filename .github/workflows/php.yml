@@ -36,7 +36,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          file: ./nginx/Dockerfile
+          file: ./php/Dockerfile
           platforms: linux/amd64,linux/arm64
           tags: |
             ghcr.io/a224327780/php:latest
