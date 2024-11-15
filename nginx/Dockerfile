@@ -28,7 +28,7 @@ RUN apt-get update -y \
     && cd /tmp \
     && wget -c --progress=bar:force --prefer-family=IPv4 --no-check-certificate https://openssl.org/source/old/1.1.1/${OPENSSL_VERSION}.tar.gz \
     && tar zxf ${OPENSSL_VERSION}.tar.gz \
-    && wget -nv https://nginx.org/download/${NGINX_VERSION}.tar.gz \
+    && wget -c --progress=bar:force --prefer-family=IPv4 --no-check-certificate https://nginx.org/download/${NGINX_VERSION}.tar.gz \
     && tar -zxf ${NGINX_VERSION}.tar.gz \
     && cd /tmp/${NGINX_VERSION} \
     && ./configure ${CONFIG} \
