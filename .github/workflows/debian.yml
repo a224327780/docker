@@ -38,7 +38,7 @@ jobs:
           file: ./debian
           platforms: linux/amd64,linux/arm64
           tags: |
-            ghcr.io/a224327780/debain:latest
-            ghcr.io/a224327780/debain:bullseye
-            caoyufei/debain:bullseye
-            caoyufei/debain:latest
+            ghcr.io/a224327780/debian:latest
+            ghcr.io/a224327780/debian:bullseye
+            caoyufei/debian:bullseye
+            caoyufei/debian:latest
