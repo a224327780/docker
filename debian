@@ -2,7 +2,7 @@ FROM debian:bullseye
 
 ENV TIME_ZONE=Asia/Shanghai 
 
-RUN apt update && apt install -y locales ntp && \
+RUN apt-get update && apt-get install -y locales ntp && \
     locale-gen zh_CN.UTF-8 && \
     sed -i -e 's/# zh_CN.UTF-8 UTF-8/zh_CN.UTF-8 UTF-8/' /etc/locale.gen && \
     rm -rf /etc/localtime && ln -sf /usr/share/zoneinfo/${TIME_ZONE} /etc/localtime \
@@ -16,7 +16,7 @@ RUN apt update && apt install -y locales ntp && \
     && echo 'export LANG=zh_CN.UTF-8' >> ~/.bashrc \
     && echo 'export LANGUAGE=zh_CN.UTF-8' >> ~/.bashrc \
     && echo 'export LC_ALL=zh_CN.UTF-8' >> ~/.bashrc \
-    && apt clean \
+    && apt-get clean \
     && rm -rf /var/tmp/* 
     
 CMD ["bash"]
