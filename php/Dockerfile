@@ -77,7 +77,7 @@ RUN apt-get update -y \
     && ./configure --with-php-config=/usr/local/php/bin/php-config \
     && make && make install \
     && cp /tmp/conf/007-redis.ini /usr/local/php/conf.d/007-redis.ini \
-    && cd /tmp/amqp-${AMQP_VERSION}
+    && cd /tmp/amqp-${AMQP_VERSION} \
     && /usr/local/php/bin/phpize \
     && ./configure --with-php-config=/usr/local/php/bin/php-config --with-librabbitmq-dir=/usr/local/rabbitmq-c \
     && make && make install \
