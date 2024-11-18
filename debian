@@ -8,7 +8,6 @@ RUN apt-get update && apt-get install -y locales ntp && \
     sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
     locale-gen zh_CN.UTF-8 && \
     locale-gen en_US.UTF-8 && locale -a && \
-    update-locale LANG=zh_CN.UTF-8 LANGUAGE=zh_CN.UTF-8 LC_ALL=zh_CN.UTF-8 && \
     rm -rf /etc/localtime && ln -sf /usr/share/zoneinfo/${TIME_ZONE} /etc/localtime \
     && echo "* soft nproc 65535" >> /etc/security/limits.conf \
     && echo "* hard nproc 65535" >> /etc/security/limits.conf \
