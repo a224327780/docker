@@ -6,10 +6,10 @@ ENV DEBIAN_FRONTEND=noninteractive PATH=$PATH:/usr/local/php/bin:/usr/local/php/
 ADD php/conf /tmp/conf
 COPY php/docker-entrypoint.sh /docker-entrypoint.sh
 
-ENV PHPIZE_DEPS build-essential gcc g++ make cmake autoconf automake file libc-dev  pkg-config re2c 
+ENV PHPIZE_DEPS build-essential gcc g++ make cmake autoconf automake file libc-dev pkg-config re2c 
 
 RUN apt-get update -y \
-    && apt-get install -y --no-install-recommends $PHPIZE_DEPS wget curl ca-certificates libxml2-dev libcurl4-openssl-dev libjpeg-dev libsqlite3-dev oniguruma-devel libsodium-dev libpng-dev openssl libssl-dev libxslt-dev \
+    && apt-get install -y --no-install-recommends $PHPIZE_DEPS wget curl ca-certificates libxml2-dev libcurl4-openssl-dev libjpeg-dev libsqlite3-dev libsodium-dev libpng-dev openssl libssl-dev libxslt-dev \
     && CONFIG="\
     --prefix=/usr/local/php --with-config-file-path=/usr/local/php/etc --with-config-file-scan-dir=/usr/local/php/conf.d --enable-fpm --with-fpm-user=www --with-fpm-group=www --enable-mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-iconv-dir --with-freetype-dir=/usr/local/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl --enable-mbregex --enable-mbstring --enable-intl --enable-pcntl --enable-ftp --with-gd --with-openssl  --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --without-libzip --enable-soap --with-gettext --enable-opcache --with-xsl --with-pear --with-webp --with-sodium" \
     && cd /tmp \
