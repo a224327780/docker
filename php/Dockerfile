@@ -6,7 +6,7 @@ ENV PATH=$PATH:/usr/local/php/bin:/usr/local/php/sbin
 ADD php/conf /tmp/conf
 COPY php/docker-entrypoint.sh /docker-entrypoint.sh
 
-ENV PHPIZE_DEPS autoconf dpkg-dev file g++ gcc libc-dev make pkg-config re2c
+ENV PHPIZE_DEPS autoconf dpkg-dev file g++ gcc cmake libc-dev make pkg-config re2c
 
 RUN apt-get update -y \
     && apt-get install -y --no-install-recommends $PHPIZE_DEPS wget curl ca-certificates libxml2-dev libcurl4-openssl-dev libjpeg-dev libsodium-dev libpng-dev openssl libssl-dev libxslt-dev \
@@ -87,7 +87,7 @@ RUN apt-get update -y \
     && chmod +x /usr/local/bin/composer \
     && composer --version && php --version && php -m \
     && composer global require 'fxp/composer-asset-plugin:^1.4.1' \
-    && apt-get purge --auto-remove binutils autoconf dpkg-dev g++ gcc libc-dev make pkg-config re2c wget curl -y \
+    && apt-get purge --auto-remove binutils autoconf dpkg-dev g++ cmake gcc libc-dev make pkg-config re2c wget curl -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
     && chmod +x /docker-entrypoint.sh
