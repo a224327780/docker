@@ -5,7 +5,6 @@ ENV TIME_ZONE=Asia/Shanghai
 RUN apt-get update && apt-get install -y locales ntp && \
     locale-gen zh_CN.UTF-8 && \
     sed -i -e 's/# zh_CN.UTF-8 UTF-8/zh_CN.UTF-8 UTF-8/' /etc/locale.gen && \
-    update-locale LANG=zh_CN.UTF-8 LANGUAGE=zh_CN.UTF-8 LC_ALL=zh_CN.UTF-8 && \
     rm -rf /etc/localtime && ln -sf /usr/share/zoneinfo/${TIME_ZONE} /etc/localtime \
     && ulimit -v unlimited \
     && echo "* soft nproc 65535" >> /etc/security/limits.conf \
