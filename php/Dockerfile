@@ -1,6 +1,6 @@
 FROM ghcr.io/a224327780/debian
 
-ENV PHP_VERSION=php-7.3.32 PHPRedis_Ver=redis-5.3.4 Freetype_New_Ver=freetype-2.10.1 DEBIAN_FRONTEND=noninteractive
+ENV PHP_VERSION=php-7.4.33 AMQP_VERSION=2.1.0 RABBITMQ_VERSION=0.12.0 PHPRedis_Ver=redis-5.3.4 Freetype_New_Ver=freetype-2.10.1 DEBIAN_FRONTEND=noninteractive
 ENV PATH=$PATH:/usr/local/php/bin:/usr/local/php/sbin
 
 ADD php/conf /tmp/conf
@@ -9,11 +9,17 @@ COPY php/docker-entrypoint.sh /docker-entrypoint.sh
 ENV PHPIZE_DEPS autoconf dpkg-dev file g++ gcc libc-dev make pkg-config re2c
 
 RUN apt-get update -y \
-    && apt-get install -y --no-install-recommends $PHPIZE_DEPS wget curl ca-certificates libxml2-dev libcurl4-openssl-dev libjpeg-dev libpng-dev openssl libssl-dev libxslt-dev \
+    && apt-get install -y --no-install-recommends $PHPIZE_DEPS wget curl ca-certificates libxml2-dev libcurl4-openssl-dev libjpeg-dev libsodium-dev libpng-dev openssl libssl-dev libxslt-dev \
     && CONFIG="\
-    --prefix=/usr/local/php --with-config-file-path=/usr/local/php/etc --with-config-file-scan-dir=/usr/local/php/conf.d --enable-fpm --with-fpm-user=www --with-fpm-group=www --enable-mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-iconv-dir --with-freetype-dir=/usr/local/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl --enable-mbregex --enable-mbstring --enable-intl --enable-pcntl --enable-ftp --with-gd --with-openssl  --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --without-libzip --enable-soap --with-gettext --enable-opcache --with-xsl --with-pear --disable-fileinfo" \
+    --prefix=/usr/local/php --with-config-file-path=/usr/local/php/etc --with-config-file-scan-dir=/usr/local/php/conf.d --enable-fpm --with-fpm-user=www --with-fpm-group=www --enable-mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-iconv-dir --with-freetype-dir=/usr/local/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl --enable-mbregex --enable-mbstring --enable-intl --enable-pcntl --enable-ftp --with-gd --with-openssl  --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --without-libzip --enable-soap --with-gettext --enable-opcache --with-xsl --with-pear --with-webp --with-sodium" \
     && cd /tmp \
-    && wget -nv --no-check-certificate https://download.savannah.gnu.org/releases/freetype/${Freetype_New_Ver}.tar.xz \
+    && wget -nv --no-check-certificate https://github.com/alanxz/rabbitmq-c/archive/refs/tags/v${RABBITMQ_VERSION}.tar.gz \
+    && tar zxvf v${RABBITMQ_VERSION}.tar.gz && cd /tmp/rabbitmq-c-${RABBITMQ_VERSION} \
+    && cmake -DCMAKE_INSTALL_PREFIX=/usr/local/rabbitmq-c \
+    && cmake --build . --target install \
+    && cd /tmp && wget -nv --no-check-certificate https://pecl.php.net/get/amqp-${AMQP_VERSION}.tgz \
+    && tar zxvf amqp-${AMQP_VERSION}.tgz \
+    && cd /tmp && wget -nv --no-check-certificate https://download.savannah.gnu.org/releases/freetype/${Freetype_New_Ver}.tar.xz \
     && tar Jxf ${Freetype_New_Ver}.tar.xz \
     && cd /tmp/${Freetype_New_Ver} \
     && ./configure --prefix=/usr/local/freetype --enable-freetype-config\
@@ -69,13 +75,18 @@ RUN apt-get update -y \
     && cd /tmp/${PHPRedis_Ver} \
     && /usr/local/php/bin/phpize \
     && ./configure --with-php-config=/usr/local/php/bin/php-config \
-    && make \
-    && make install \
+    && make && make install \
     && cp /tmp/conf/007-redis.ini /usr/local/php/conf.d/007-redis.ini \
+    && cd /tmp/amqp-${AMQP_VERSION}
+    && /usr/local/php/bin/phpize \
+    && ./configure --with-php-config=/usr/local/php/bin/php-config --with-librabbitmq-dir=/usr/local/rabbitmq-c \
+    && make && make install \
+    && cp /tmp/conf/006-amqp.ini /usr/local/php/conf.d/006-amqp.ini \
     && install -m 755 /tmp/conf/fpm-configure /usr/local/bin/fpm-configure \
     && wget --prefer-family=IPv4 --no-check-certificate -T 120 -t3 https://getcomposer.org/download/2.8.1/composer.phar -O /usr/local/bin/composer \
     && chmod +x /usr/local/bin/composer \
-    && composer --version && php --version \
+    && composer --version && php --version && php -m \
+    && composer global require "fxp/composer-asset-plugin:^1.4.1"
     && apt-get purge --auto-remove binutils autoconf dpkg-dev g++ gcc libc-dev make pkg-config re2c wget curl -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \

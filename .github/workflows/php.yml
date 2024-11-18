@@ -40,4 +40,6 @@ jobs:
           platforms: linux/amd64,linux/arm64
           tags: |
             ghcr.io/a224327780/php:latest
+            ghcr.io/a224327780/php:7.4
             caoyufei/php:latest
+            caoyufei/php:7.4
