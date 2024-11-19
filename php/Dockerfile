@@ -88,9 +88,9 @@ RUN apt-get update -y \
     && ./configure --with-php-config=/usr/local/php/bin/php-config --with-librabbitmq-dir=/usr/local/rabbitmq-c \
     && make && make install \
     && cp /tmp/conf/006-amqp.ini /usr/local/php/conf.d/006-amqp.ini \
-    && cd /tmp/ && wget -c --no-check-certificate https://github.com/viest/php-ext-xlswriter/archive/refs/tags/v${xlswriter}.tar.gz \
-    && tar zxvf v${xlswriter}.tar.gz \
-    && cd /tmp/php-ext-xlswriter-${xlswriter} \
+    && cd /tmp/ && git clone https://github.com/viest/php-ext-excel-export \
+    && cd /tmp/php-ext-excel-export \
+    && git submodule update --init \
     && /usr/local/php/bin/phpize \
     && ./configure --with-php-config=/usr/local/php/bin/php-config --enable-reader \
     && make && make install \
