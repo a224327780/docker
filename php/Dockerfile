@@ -1,6 +1,6 @@
 FROM caoyufei/debian
 
-ENV PHP_VERSION=php-7.4.33 MONGODB_VERSION=1.19.4 AMQP_VERSION=2.1.0 RABBITMQ_VERSION=0.12.0 PHPRedis_Ver=redis-5.3.4 Freetype_New_Ver=freetype-2.10.1 
+ENV PHP_VERSION=php-7.4.33 AMQP_VERSION=2.1.0 RABBITMQ_VERSION=0.12.0 PHPRedis_Ver=redis-5.3.4 Freetype_New_Ver=freetype-2.10.1 MONGODB_VERSION=1.19.4
 ENV DEBIAN_FRONTEND=noninteractive PATH=$PATH:/usr/local/php/bin:/usr/local/php/sbin
 
 ADD php/conf /tmp/conf
