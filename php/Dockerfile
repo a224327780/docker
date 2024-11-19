@@ -1,6 +1,6 @@
 FROM caoyufei/debian
 
-ENV PHP_VERSION=php-7.4.33 AMQP_VERSION=2.1.0 RABBITMQ_VERSION=0.12.0 PHPRedis_Ver=redis-5.3.4 Freetype_New_Ver=freetype-2.10.1 
+ENV PHP_VERSION=php-7.4.33 MONGODB_VERSION=1.19.4 AMQP_VERSION=2.1.0 RABBITMQ_VERSION=0.12.0 PHPRedis_Ver=redis-5.3.4 Freetype_New_Ver=freetype-2.10.1 
 ENV DEBIAN_FRONTEND=noninteractive PATH=$PATH:/usr/local/php/bin:/usr/local/php/sbin
 
 ADD php/conf /tmp/conf
@@ -17,8 +17,6 @@ RUN apt-get update -y \
     && tar zxvf v${RABBITMQ_VERSION}.tar.gz && cd /tmp/rabbitmq-c-${RABBITMQ_VERSION} \
     && cmake -DCMAKE_INSTALL_PREFIX=/usr/local/rabbitmq-c \
     && cmake --build . --target install \
-    && cd /tmp && wget -nv --no-check-certificate https://pecl.php.net/get/amqp-${AMQP_VERSION}.tgz \
-    && tar zxvf amqp-${AMQP_VERSION}.tgz \
     && cd /tmp && wget -nv --no-check-certificate https://download.savannah.gnu.org/releases/freetype/${Freetype_New_Ver}.tar.xz \
     && tar Jxf ${Freetype_New_Ver}.tar.xz \
     && cd /tmp/${Freetype_New_Ver} \
@@ -66,9 +64,17 @@ RUN apt-get update -y \
     && cp /tmp/conf/php-fpm.conf /usr/local/php/etc/php-fpm.conf \
     && rm ~/.pearrc \
     && rm -f /usr/local/php/conf.d/* \
-    && cp /tmp/conf/004-opcache.ini /usr/local/php/conf.d/004-opcache.ini \
+    # && cp /tmp/conf/004-opcache.ini /usr/local/php/conf.d/004-opcache.ini \
     && cp sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm \
     && chmod +x /etc/init.d/php-fpm \
+    && cd /tmp \
+    && wget -c --progress=bar:force --prefer-family=IPv4 --no-check-certificate https://pecl.php.net/get/mongodb-${MONGODB_VERSION}.tgz \
+    && tar zxf mongodb-${MONGODB_VERSION}.tgz \
+    && cd /tmp/mongodb-${MONGODB_VERSION} \
+    && /usr/local/php/bin/phpize \
+    && ./configure --with-php-config=/usr/local/php/bin/php-config \
+    && make && make install \
+    && cp /tmp/conf/003-mongo.ini /usr/local/php/conf.d/003-mongo.ini \
     && cd /tmp \
     && wget -c --progress=bar:force --prefer-family=IPv4 --no-check-certificate http://pecl.php.net/get/${PHPRedis_Ver}.tgz \
     && tar zxf ${PHPRedis_Ver}.tgz \
@@ -77,6 +83,8 @@ RUN apt-get update -y \
     && ./configure --with-php-config=/usr/local/php/bin/php-config \
     && make && make install \
     && cp /tmp/conf/007-redis.ini /usr/local/php/conf.d/007-redis.ini \
+    && cd /tmp && wget -nv --no-check-certificate https://pecl.php.net/get/amqp-${AMQP_VERSION}.tgz \
+    && tar zxvf amqp-${AMQP_VERSION}.tgz \
     && cd /tmp/amqp-${AMQP_VERSION} \
     && /usr/local/php/bin/phpize \
     && ./configure --with-php-config=/usr/local/php/bin/php-config --with-librabbitmq-dir=/usr/local/rabbitmq-c \
