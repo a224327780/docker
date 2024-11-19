@@ -67,11 +67,11 @@ RUN apt-get update -y \
     && chmod +x /etc/init.d/php-fpm \
     && cd /tmp \
     && wget -c --progress=bar:force --prefer-family=IPv4 --no-check-certificate https://pecl.php.net/get/mongodb-${MONGODB_VERSION}.tgz \
-    && tar zxf mongodb-${MONGODB_VERSION}.tgz \
-    && cd /tmp/mongodb-${MONGODB_VERSION} \
-    && /usr/local/php/bin/phpize \
-    && ./configure --with-php-config=/usr/local/php/bin/php-config \
-    && make && make install \
+    # && tar zxf mongodb-${MONGODB_VERSION}.tgz \
+    # && cd /tmp/mongodb-${MONGODB_VERSION} \
+    # && /usr/local/php/bin/phpize \
+    # && ./configure --with-php-config=/usr/local/php/bin/php-config \
+    # && make && make install \
     # && cp /tmp/conf/003-mongo.ini /usr/local/php/conf.d/003-mongo.ini \
     && cd /tmp \
     && wget -c --progress=bar:force --prefer-family=IPv4 --no-check-certificate http://pecl.php.net/get/${PHPRedis_Ver}.tgz \
