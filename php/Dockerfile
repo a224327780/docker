@@ -4,7 +4,7 @@ ENV PHP_VERSION=php-7.4.33 AMQP_VERSION=2.1.0 RABBITMQ_VERSION=0.12.0 PHPRedis_V
 ENV DEBIAN_FRONTEND=noninteractive PATH=$PATH:/usr/local/php/bin:/usr/local/php/sbin
 
 ADD php/conf /tmp/conf
-COPY php/docker-entrypoint.sh /docker-entrypoint.sh
+COPY php/*.sh /usr/local/bin/
 
 RUN apt-get update -y \
     && apt-get install -y --no-install-recommends build-essential gcc g++ make cmake autoconf automake file libc-dev pkg-config re2c wget curl ca-certificates libxml2-dev libcurl4-openssl-dev libjpeg-dev libsqlite3-dev libonig-dev libsodium-dev libpng-dev openssl libssl-dev libxslt-dev \
@@ -88,7 +88,6 @@ RUN apt-get update -y \
     && ./configure --with-php-config=/usr/local/php/bin/php-config --with-librabbitmq-dir=/usr/local/rabbitmq-c \
     && make && make install \
     && cp /tmp/conf/006-amqp.ini /usr/local/php/conf.d/006-amqp.ini \
-    && install -m 755 /tmp/conf/fpm-configure /usr/local/bin/fpm-configure \
     && wget --prefer-family=IPv4 --no-check-certificate -T 120 -t3 https://getcomposer.org/download/2.8.1/composer.phar -O /usr/local/bin/composer \
     && chmod +x /usr/local/bin/composer \
     && composer --version && php --version && php -m \
@@ -96,12 +95,12 @@ RUN apt-get update -y \
     && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-    && chmod +x /docker-entrypoint.sh
+    && chmod +x /usr/local/bin/*.sh
 
 # && apt-get purge --auto-remove build-essential gcc g++ make cmake autoconf automake libc-dev pkg-config re2c wget curl -y \
 
 WORKDIR /data/wwwroot
 
-ENTRYPOINT ["/docker-entrypoint.sh"]
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 
-CMD ["php-fpm", "-F", "--fpm-config", "/usr/local/php/etc/php-fpm.conf"]
+CMD ["/usr/local/bin/docker-start.sh"]
