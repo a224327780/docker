@@ -94,7 +94,7 @@ RUN apt-get update -y \
     && /usr/local/php/bin/phpize \
     && ./configure --with-php-config=/usr/local/php/bin/php-config --enable-reader \
     && make && make install \
-    && echo 'extension = "xlswriter.so"' > /usr/local/php/conf.d/009-xlswriter.ini
+    && echo 'extension = "xlswriter.so"' > /usr/local/php/conf.d/009-xlswriter.ini \
     && cd /tmp/ && wget -c --no-check-certificate https://github.com/ImageMagick/ImageMagick/archive/refs/tags/${ImageMagick_VERSION}.tar.gz \
     && tar -zxvf ${ImageMagick_VERSION}.tar.gz \
     && cd /tmp/ImageMagick-${ImageMagick_VERSION} \
@@ -106,7 +106,7 @@ RUN apt-get update -y \
     && /usr/local/php/bin/phpize \
     && ./configure --with-php-config=/usr/local/php/bin/php-config --with-imagick=/usr/local/imagemagick \
     && make && make install \
-    && echo 'extension = "imagick.so"' > /usr/local/php/conf.d/008-imagick.ini
+    && echo 'extension = "imagick.so"' > /usr/local/php/conf.d/008-imagick.ini \
     && wget --no-check-certificate https://getcomposer.org/download/1.10.18/composer.phar -O /usr/local/bin/composer \
     && chmod +x /usr/local/bin/composer \
     && composer --version && php --version && php -m \
