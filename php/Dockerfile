@@ -1,13 +1,11 @@
 FROM caoyufei/debian
 
-ENV PHP_VERSION=php-7.4.33 AMQP_VERSION=2.1.0 RABBITMQ_VERSION=0.12.0 PHPRedis_Ver=redis-5.3.4 Freetype_New_Ver=freetype-2.10.1
+ENV PHP_VERSION=php-7.4.33 AMQP_VERSION=2.1.0 RABBITMQ_VERSION=0.12.0 PHPRedis_Ver=redis-5.3.4 Freetype_New_Ver=freetype-2.10.1 MONGODB_VERSION=1.19.4
 ENV DEBIAN_FRONTEND=noninteractive PATH=$PATH:/usr/local/php/bin:/usr/local/php/sbin
-ENV MONGODB_VERSION=1.19.4
+ENV PHPIZE_DEPS build-essential gcc g++ make cmake autoconf automake file libc-dev pkg-config re2c 
 
 ADD php/conf /tmp/conf
 COPY php/docker-entrypoint.sh /docker-entrypoint.sh
-
-ENV PHPIZE_DEPS build-essential gcc g++ make cmake autoconf automake file libc-dev pkg-config re2c 
 
 RUN apt-get update -y \
     && apt-get install -y --no-install-recommends $PHPIZE_DEPS wget curl ca-certificates libxml2-dev libcurl4-openssl-dev libjpeg-dev libsqlite3-dev libonig-dev libsodium-dev libpng-dev openssl libssl-dev libxslt-dev \
@@ -69,9 +67,9 @@ RUN apt-get update -y \
     && cp sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm \
     && chmod +x /etc/init.d/php-fpm \
     && cd /tmp \
-    && wget -c --progress=bar:force --prefer-family=IPv4 --no-check-certificate https://pecl.php.net/get/mongodb-${MONGODB_VERSION}.tgz \
-    && tar zxf mongodb-${MONGODB_VERSION}.tgz \
-    && cd /tmp/mongodb-${MONGODB_VERSION} \
+    && wget -c --progress=bar:force --prefer-family=IPv4 --no-check-certificate https://pecl.php.net/get/mongodb-1.19.4.tgz \
+    && tar zxf mongodb-1.19.4.tgz \
+    && cd /tmp/mongodb-1.19.4 \
     && /usr/local/php/bin/phpize \
     && ./configure --with-php-config=/usr/local/php/bin/php-config \
     && make && make install \
