@@ -7,7 +7,7 @@ ADD php/conf /tmp/conf
 COPY php/*.sh /usr/local/bin/
 
 RUN apt-get update -y \
-    && apt-get install -y --no-install-recommends build-essential gcc g++ make cmake autoconf automake file libc-dev pkg-config re2c wget curl ca-certificates libxml2-dev libcurl4-openssl-dev libjpeg-dev libsqlite3-dev libonig-dev libsodium-dev libpng-dev openssl libssl-dev libxslt-dev \
+    && apt-get install -y --no-install-recommends build-essential gcc g++ make cmake autoconf automake file libc-dev pkg-config re2c wget git curl ca-certificates libxml2-dev libcurl4-openssl-dev libjpeg-dev libsqlite3-dev libonig-dev libsodium-dev libpng-dev openssl libssl-dev libxslt-dev \
     && CONFIG="\
     --prefix=/usr/local/php --with-config-file-path=/usr/local/php/etc --with-config-file-scan-dir=/usr/local/php/conf.d --enable-fpm --with-fpm-user=www --with-fpm-group=www --enable-mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-iconv-dir --with-freetype-dir=/usr/local/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl --enable-mbregex --enable-mbstring --enable-intl --enable-pcntl --enable-ftp --with-gd --with-openssl  --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --without-libzip --enable-soap --with-gettext --enable-opcache --with-xsl --with-pear --with-webp --with-sodium" \
     && cd /tmp \
@@ -110,7 +110,7 @@ RUN apt-get update -y \
     && wget --no-check-certificate https://getcomposer.org/download/1.10.18/composer.phar -O /usr/local/bin/composer \
     && chmod +x /usr/local/bin/composer \
     && composer --version && php --version && php -m \
-    && apt-get purge --auto-remove build-essential gcc g++ make cmake autoconf automake libc-dev pkg-config re2c wget curl -y \
+    && apt-get purge --auto-remove build-essential gcc g++ make cmake autoconf automake libc-dev pkg-config re2c wget curl git -y \
     && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
     && apt-get clean \
     && find -type f -name '*.a' -delete \
