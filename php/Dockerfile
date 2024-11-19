@@ -91,7 +91,7 @@ RUN apt-get update -y \
     && wget --prefer-family=IPv4 --no-check-certificate -T 120 -t3 https://getcomposer.org/download/2.8.1/composer.phar -O /usr/local/bin/composer \
     && chmod +x /usr/local/bin/composer \
     && composer --version && php --version && php -m \
-    && composer global require 'fxp/composer-asset-plugin:^1.4.1' \
+    # && composer global require 'fxp/composer-asset-plugin:^1.4.1' \
     && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
