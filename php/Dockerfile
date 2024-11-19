@@ -28,7 +28,7 @@ RUN apt-get update -y \
     && groupadd www \
     && useradd -s /sbin/nologin -g www www \
     && cd /tmp \
-    && wget -c --progress=bar:force --prefer-family=IPv4 --no-check-certificate https://www.php.net/distributions/${PHP_VERSION}.tar.bz2 \
+    && wget -c --no-check-certificate https://www.php.net/distributions/${PHP_VERSION}.tar.bz2 \
     && tar xjf ${PHP_VERSION}.tar.bz2 \
     && cd /tmp/${PHP_VERSION} \
     && ./configure $CONFIG \
@@ -94,7 +94,8 @@ RUN apt-get update -y \
     && /usr/local/php/bin/phpize \
     && ./configure --with-php-config=/usr/local/php/bin/php-config --enable-reader \
     && make && make install \
-    && cd /tmp/ && wget -c --no-check-certificate https://github.com/ImageMagick/ImageMagick/archive/refs/tags/${ImageMagick_VERSION}.tar.gz && tar -zxvf ${ImageMagick_VERSION}.tar.gz \
+    && cd /tmp/ && wget -c --no-check-certificate https://github.com/ImageMagick/ImageMagick/archive/refs/tags/${ImageMagick_VERSION}.tar.gz \
+    && tar -zxvf ${ImageMagick_VERSION}.tar.gz \
     && cd /tmp/ImageMagick-${ImageMagick_VERSION} \
     && && ./configure --prefix=/usr/local/imagemagick \
     && make && make install \
@@ -104,7 +105,6 @@ RUN apt-get update -y \
     && /usr/local/php/bin/phpize \
     && ./configure --with-php-config=/usr/local/php/bin/php-config --with-imagick=/usr/local/imagemagick \
     && make && make install \
-    && echo 'extension = "imagick.so"' > /usr/local/php/conf.d/008-imagick.ini \
     && wget --prefer-family=IPv4 --no-check-certificate -T 120 -t3 https://getcomposer.org/download/1.10.18/composer.phar -O /usr/local/bin/composer \
     && chmod +x /usr/local/bin/composer \
     && composer --version && php --version && php -m \
