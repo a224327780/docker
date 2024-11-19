@@ -2,13 +2,12 @@ FROM caoyufei/debian
 
 ENV PHP_VERSION=php-7.4.33 AMQP_VERSION=2.1.0 RABBITMQ_VERSION=0.12.0 PHPRedis_Ver=redis-5.3.4 Freetype_New_Ver=freetype-2.10.1 MONGODB_VERSION=1.19.4
 ENV DEBIAN_FRONTEND=noninteractive PATH=$PATH:/usr/local/php/bin:/usr/local/php/sbin
-ENV PHPIZE_DEPS build-essential gcc g++ make cmake autoconf automake file libc-dev pkg-config re2c 
 
 ADD php/conf /tmp/conf
 COPY php/docker-entrypoint.sh /docker-entrypoint.sh
 
 RUN apt-get update -y \
-    && apt-get install -y --no-install-recommends $PHPIZE_DEPS wget curl ca-certificates libxml2-dev libcurl4-openssl-dev libjpeg-dev libsqlite3-dev libonig-dev libsodium-dev libpng-dev openssl libssl-dev libxslt-dev \
+    && apt-get install -y --no-install-recommends build-essential gcc g++ make cmake autoconf automake file libc-dev pkg-config re2c wget curl ca-certificates libxml2-dev libcurl4-openssl-dev libjpeg-dev libsqlite3-dev libonig-dev libsodium-dev libpng-dev openssl libssl-dev libxslt-dev \
     && CONFIG="\
     --prefix=/usr/local/php --with-config-file-path=/usr/local/php/etc --with-config-file-scan-dir=/usr/local/php/conf.d --enable-fpm --with-fpm-user=www --with-fpm-group=www --enable-mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-iconv-dir --with-freetype-dir=/usr/local/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl --enable-mbregex --enable-mbstring --enable-intl --enable-pcntl --enable-ftp --with-gd --with-openssl  --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --without-libzip --enable-soap --with-gettext --enable-opcache --with-xsl --with-pear --with-webp --with-sodium" \
     && cd /tmp \
@@ -67,9 +66,9 @@ RUN apt-get update -y \
     && cp sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm \
     && chmod +x /etc/init.d/php-fpm \
     && cd /tmp \
-    && wget -c --progress=bar:force --prefer-family=IPv4 --no-check-certificate https://pecl.php.net/get/mongodb-1.19.4.tgz \
-    && tar zxf mongodb-1.19.4.tgz \
-    && cd /tmp/mongodb-1.19.4 \
+    && wget -c --progress=bar:force --prefer-family=IPv4 --no-check-certificate https://pecl.php.net/get/mongodb-${MONGODB_VERSION}.tgz \
+    && tar zxf mongodb-${MONGODB_VERSION}.tgz \
+    && cd /tmp/mongodb-${MONGODB_VERSION} \
     && /usr/local/php/bin/phpize \
     && ./configure --with-php-config=/usr/local/php/bin/php-config \
     && make && make install \
