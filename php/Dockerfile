@@ -95,7 +95,8 @@ RUN apt-get update -y \
     && chmod +x /usr/local/bin/composer \
     && composer --version && php --version && php -m \
     && composer global require 'fxp/composer-asset-plugin:^1.4.1' \
-    && apt-get purge --auto-remove build-essential gcc g++ make cmake autoconf automake libc-dev pkg-config re2c wget curl -y \
+    # && apt-get purge --auto-remove build-essential gcc g++ make cmake autoconf automake libc-dev pkg-config re2c wget curl -y \
+    && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
     && chmod +x /docker-entrypoint.sh
