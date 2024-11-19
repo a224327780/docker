@@ -1,6 +1,6 @@
 FROM caoyufei/debian
 
-ENV PHP_VERSION=php-7.4.33 AMQP_VERSION=2.1.0 RABBITMQ_VERSION=0.12.0 PHPRedis_Ver=redis-5.3.4 Freetype_New_Ver=freetype-2.10.1 MONGODB_VERSION=1.19.4
+ENV PHP_VERSION=php-7.4.33 imagick_VERSION=imagick-3.7.0 AMQP_VERSION=2.1.0 RABBITMQ_VERSION=0.12.0 PHPRedis_Ver=redis-5.3.4 Freetype_New_Ver=freetype-2.10.1 MONGODB_VERSION=1.19.4 xlswriter=1.5.8 ImageMagick_VERSION=7.1.1-40
 ENV DEBIAN_FRONTEND=noninteractive PATH=$PATH:/usr/local/php/bin:/usr/local/php/sbin
 
 ADD php/conf /tmp/conf
@@ -88,6 +88,23 @@ RUN apt-get update -y \
     && ./configure --with-php-config=/usr/local/php/bin/php-config --with-librabbitmq-dir=/usr/local/rabbitmq-c \
     && make && make install \
     && cp /tmp/conf/006-amqp.ini /usr/local/php/conf.d/006-amqp.ini \
+    && cd /tmp/ && wget -c --no-check-certificate https://github.com/viest/php-ext-xlswriter/archive/refs/tags/v${xlswriter}.tar.gz \
+    && tar zxvf v${xlswriter}.tgz \
+    && cd /tmp/php-ext-xlswriter-${xlswriter} \
+    && /usr/local/php/bin/phpize \
+    && ./configure --with-php-config=/usr/local/php/bin/php-config --enable-reader \
+    && make && make install \
+    && cd /tmp/ && wget -c --no-check-certificate https://github.com/ImageMagick/ImageMagick/archive/refs/tags/${ImageMagick_VERSION}.tar.gz && tar -zxvf ${ImageMagick_VERSION}.tar.gz \
+    && cd /tmp/ImageMagick-${ImageMagick_VERSION} \
+    && && ./configure --prefix=/usr/local/imagemagick \
+    && make && make install \
+    && cd /tmp && wget -c --no-check-certificate https://pecl.php.net/get/${imagick_VERSION}.tgz \
+    && tar zxvf ${imagick_VERSION}.tgz \
+    && cd /tmp/${imagick_VERSION} \
+    && /usr/local/php/bin/phpize \
+    && ./configure --with-php-config=/usr/local/php/bin/php-config --with-imagick=/usr/local/imagemagick \
+    && make && make install \
+    && echo 'extension = "imagick.so"' > /usr/local/php/conf.d/008-imagick.ini \
     && wget --prefer-family=IPv4 --no-check-certificate -T 120 -t3 https://getcomposer.org/download/1.10.18/composer.phar -O /usr/local/bin/composer \
     && chmod +x /usr/local/bin/composer \
     && composer --version && php --version && php -m \
