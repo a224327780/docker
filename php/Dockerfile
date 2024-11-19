@@ -67,12 +67,12 @@ RUN apt-get update -y \
     && chmod +x /etc/init.d/php-fpm \
     && cd /tmp \
     && wget -c --progress=bar:force --prefer-family=IPv4 --no-check-certificate https://pecl.php.net/get/mongodb-${MONGODB_VERSION}.tgz \
-    # && tar zxf mongodb-${MONGODB_VERSION}.tgz \
-    # && cd /tmp/mongodb-${MONGODB_VERSION} \
-    # && /usr/local/php/bin/phpize \
-    # && ./configure --with-php-config=/usr/local/php/bin/php-config \
-    # && make && make install \
-    # && cp /tmp/conf/003-mongo.ini /usr/local/php/conf.d/003-mongo.ini \
+    && tar zxf mongodb-${MONGODB_VERSION}.tgz \
+    && cd /tmp/mongodb-${MONGODB_VERSION} \
+    && /usr/local/php/bin/phpize \
+    && ./configure --with-php-config=/usr/local/php/bin/php-config \
+    && make && make install \
+    && cp /tmp/conf/003-mongo.ini /usr/local/php/conf.d/003-mongo.ini \
     && cd /tmp \
     && wget -c --progress=bar:force --prefer-family=IPv4 --no-check-certificate http://pecl.php.net/get/${PHPRedis_Ver}.tgz \
     && tar zxf ${PHPRedis_Ver}.tgz \
@@ -88,16 +88,15 @@ RUN apt-get update -y \
     && ./configure --with-php-config=/usr/local/php/bin/php-config --with-librabbitmq-dir=/usr/local/rabbitmq-c \
     && make && make install \
     && cp /tmp/conf/006-amqp.ini /usr/local/php/conf.d/006-amqp.ini \
-    && wget --prefer-family=IPv4 --no-check-certificate -T 120 -t3 https://getcomposer.org/download/2.8.1/composer.phar -O /usr/local/bin/composer \
+    && wget --prefer-family=IPv4 --no-check-certificate -T 120 -t3 https://getcomposer.org/download/1.10.18/composer.phar -O /usr/local/bin/composer \
     && chmod +x /usr/local/bin/composer \
     && composer --version && php --version && php -m \
-    # && composer global require 'fxp/composer-asset-plugin:^1.4.1' \
+    && apt-get purge --auto-remove build-essential gcc g++ make cmake autoconf automake libc-dev pkg-config re2c wget curl -y \
     && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
     && apt-get clean \
+    && find -type f -name '*.a' -delete \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
     && chmod +x /usr/local/bin/*.sh
-
-# && apt-get purge --auto-remove build-essential gcc g++ make cmake autoconf automake libc-dev pkg-config re2c wget curl -y \
 
 WORKDIR /data/wwwroot
 
