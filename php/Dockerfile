@@ -62,7 +62,7 @@ RUN apt-get update -y \
     && cp /tmp/conf/php-fpm.conf /usr/local/php/etc/php-fpm.conf \
     && rm ~/.pearrc \
     && rm -f /usr/local/php/conf.d/* \
-    # && cp /tmp/conf/004-opcache.ini /usr/local/php/conf.d/004-opcache.ini \
+    && cp /tmp/conf/004-opcache.ini /usr/local/php/conf.d/004-opcache.ini \
     && cp sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm \
     && chmod +x /etc/init.d/php-fpm \
     && cd /tmp \
@@ -72,7 +72,7 @@ RUN apt-get update -y \
     && /usr/local/php/bin/phpize \
     && ./configure --with-php-config=/usr/local/php/bin/php-config \
     && make && make install \
-    && cp /tmp/conf/003-mongo.ini /usr/local/php/conf.d/003-mongo.ini \
+    # && cp /tmp/conf/003-mongo.ini /usr/local/php/conf.d/003-mongo.ini \
     && cd /tmp \
     && wget -c --progress=bar:force --prefer-family=IPv4 --no-check-certificate http://pecl.php.net/get/${PHPRedis_Ver}.tgz \
     && tar zxf ${PHPRedis_Ver}.tgz \
