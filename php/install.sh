@@ -16,7 +16,7 @@ mv /tmp/docker-*.sh /usr/local/bin
 chmod +x /usr/local/bin/docker-*.sh
 
 apt-get update -y
-apt-get install -y --no-install-recommends build-essential gcc g++ make cmake autoconf automake file libc-dev pkg-config re2c wget git curl ca-certificates libxml2-dev libcurl4-openssl-dev libjpeg-dev bzip2 libsqlite3-dev libonig-dev libsodium-dev libpng-dev openssl libssl-dev libxslt-dev
+apt-get install -y --no-install-recommends build-essential gcc g++ make cmake autoconf automake file libc-dev pkg-config re2c wget git curl ca-certificates libxml2-dev libcurl4-openssl-dev libjpeg-dev libsqlite3-dev libonig-dev libsodium-dev libpng-dev openssl libssl-dev libxslt-dev
 
 groupadd www
 useradd -s /sbin/nologin -g www www
@@ -51,6 +51,9 @@ ln -sf /usr/local/freetype/include/freetype2/* /usr/include/
 
 echo -e "[+] Installing ${PHP_VERSION}\n"
 tar zxf ${DIR}/${PHP_VERSION}.tar.gz
+
+ls -la
+pwd
 cd ${DIR}/${PHP_VERSION}
 ./configure ${CONFIG}
 make -j "$(nproc)"
