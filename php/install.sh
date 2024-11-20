@@ -16,7 +16,7 @@ mv /tmp/docker-*.sh /usr/local/bin
 chmod +x /usr/local/bin/docker-*.sh
 
 apt-get update -y
-apt-get install -y --no-install-recommends build-essential gcc g++ make cmake autoconf automake file libc-dev pkg-config re2c wget git curl ca-certificates libxml2-dev libcurl4-openssl-dev libjpeg-dev bzip2 bzip2-devel libsqlite3-dev libonig-dev libsodium-dev libpng-dev openssl libssl-dev libxslt-dev
+apt-get install -y --no-install-recommends build-essential gcc g++ make cmake autoconf automake file libc-dev pkg-config re2c wget git curl ca-certificates libxml2-dev libcurl4-openssl-dev libjpeg-dev bzip2 libsqlite3-dev libonig-dev libsodium-dev libpng-dev openssl libssl-dev libxslt-dev
 
 groupadd www
 useradd -s /sbin/nologin -g www www
