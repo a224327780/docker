@@ -16,7 +16,7 @@ mv /tmp/docker-*.sh /usr/local/bin
 chmod +x /usr/local/bin/docker-*.sh
 
 apt-get update -y
-apt-get install -y --no-install-recommends build-essential gcc g++ make cmake autoconf automake file libc-dev pkg-config re2c wget git curl ca-certificates libxml2-dev libcurl4-openssl-dev libjpeg-dev libsqlite3-dev libonig-dev libsodium-dev libpng-dev openssl libssl-dev libxslt-dev
+apt-get install -y --no-install-recommends build-essential gcc g++ make cmake autoconf automake file libc-dev pkg-config re2c wget git curl ca-certificates libxml2-dev libcurl4-openssl-dev libjpeg-dev bzip2 bzip2-devel libsqlite3-dev libonig-dev libsodium-dev libpng-dev openssl libssl-dev libxslt-dev
 
 groupadd www
 useradd -s /sbin/nologin -g www www
@@ -49,9 +49,10 @@ echo '/usr/local/freetype/lib' > /etc/ld.so.conf.d/freetype.conf
 ldconfig
 ln -sf /usr/local/freetype/include/freetype2/* /usr/include/
 
-tar zxvf ${DIR}/${PHP_VERSION}.tar.gz
+echo -e "[+] Installing ${PHP_VERSION}\n"
+tar zxf ${DIR}/${PHP_VERSION}.tar.gz
 cd ${DIR}/${PHP_VERSION}
-./configure $CONFIG
+./configure ${CONFIG}
 make -j "$(nproc)"
 make install
 find /usr/local/php/bin /usr/local/php/sbin/ -type f -executable -exec strip --strip-all '{}' + || true
@@ -124,13 +125,13 @@ cp sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm
 chmod +x /etc/init.d/php-fpm
  
 # rabbitmq
-tar zxvf ${DIR}/v${RABBITMQ_VERSION}.tar.gz
+tar zxf ${DIR}/v${RABBITMQ_VERSION}.tar.gz
 cd ${DIR}/rabbitmq-c-${RABBITMQ_VERSION}
 cmake -DCMAKE_INSTALL_PREFIX=/usr/local/rabbitmq-c
 cmake --build . --target install
 
 # amqp
-tar zxvf ${DIR}/amqp-${AMQP_VERSION}.tgz
+tar zxf ${DIR}/amqp-${AMQP_VERSION}.tgz
 cd ${DIR}/amqp-${AMQP_VERSION}
 /usr/local/php/bin/phpize
 ./configure --with-php-config=/usr/local/php/bin/php-config --with-librabbitmq-dir=/usr/local/rabbitmq-c
@@ -162,13 +163,13 @@ make && make install
 echo 'extension = "xlswriter.so"' > /usr/local/php/conf.d/005-xlswriter.ini
 
 # ImageMagick
-tar -zxvf ${DIR}/${ImageMagick_VERSION}.tar.gz
+tar -zxf ${DIR}/${ImageMagick_VERSION}.tar.gz
 cd ${DIR}/ImageMagick-${ImageMagick_VERSION}
 ./configure --prefix=/usr/local/imagemagick
 make && make install
 
 # imagick
-tar zxvf ${DIR}/${imagick_VERSION}.tgz
+tar zxf ${DIR}/${imagick_VERSION}.tgz
 cd ${DIR}/${imagick_VERSION}
 /usr/local/php/bin/phpize
 ./configure --with-php-config=/usr/local/php/bin/php-config --with-imagick=/usr/local/imagemagick
