@@ -39,7 +39,7 @@ wget -c --no-check-certificate https://pecl.php.net/get/${imagick_VERSION}.tgz
 wget -c --no-check-certificate https://download.savannah.gnu.org/releases/freetype/${Freetype_New_Ver}.tar.xz
 
 # Freetype
-tar Jxf ${DIR}/${Freetype_New_Ver}.tar.xz
+cd ${DIR} && tar Jxf ${DIR}/${Freetype_New_Ver}.tar.xz
 cd ${DIR}/${Freetype_New_Ver}
 ./configure --prefix=/usr/local/freetype --enable-freetype-config
 make && make install
@@ -50,10 +50,7 @@ ldconfig
 ln -sf /usr/local/freetype/include/freetype2/* /usr/include/
 
 echo -e "[+] Installing ${PHP_VERSION}\n"
-tar zxf ${DIR}/${PHP_VERSION}.tar.gz
-
-ls -la
-pwd
+cd ${DIR} && tar zxf ${DIR}/${PHP_VERSION}.tar.gz
 cd ${DIR}/${PHP_VERSION}
 ./configure ${CONFIG}
 make -j "$(nproc)"
@@ -128,13 +125,13 @@ cp sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm
 chmod +x /etc/init.d/php-fpm
  
 # rabbitmq
-tar zxf ${DIR}/v${RABBITMQ_VERSION}.tar.gz
+cd ${DIR} && tar zxf ${DIR}/v${RABBITMQ_VERSION}.tar.gz
 cd ${DIR}/rabbitmq-c-${RABBITMQ_VERSION}
 cmake -DCMAKE_INSTALL_PREFIX=/usr/local/rabbitmq-c
 cmake --build . --target install
 
 # amqp
-tar zxf ${DIR}/amqp-${AMQP_VERSION}.tgz
+cd ${DIR} && tar zxf ${DIR}/amqp-${AMQP_VERSION}.tgz
 cd ${DIR}/amqp-${AMQP_VERSION}
 /usr/local/php/bin/phpize
 ./configure --with-php-config=/usr/local/php/bin/php-config --with-librabbitmq-dir=/usr/local/rabbitmq-c
@@ -142,7 +139,7 @@ make && make install
 echo 'extension = "amqp.so"' > /usr/local/php/conf.d/002-amqp.ini
 
 # mongodb
-tar zxf ${DIR}/${MONGODB_VERSION}.tgz
+cd ${DIR} && tar zxf ${DIR}/${MONGODB_VERSION}.tgz
 cd ${DIR}/${MONGODB_VERSION}
 /usr/local/php/bin/phpize
 ./configure --with-php-config=/usr/local/php/bin/php-config
@@ -150,7 +147,7 @@ make && make install
 echo 'extension = "mongodb.so"' > /usr/local/php/conf.d/003-mongo.ini
 
 # redis
-tar zxf ${DIR}/${PHPRedis_Ver}.tgz
+cd ${DIR} && tar zxf ${DIR}/${PHPRedis_Ver}.tgz
 cd ${DIR}/${PHPRedis_Ver}
 /usr/local/php/bin/phpize
 ./configure --with-php-config=/usr/local/php/bin/php-config
@@ -158,7 +155,7 @@ make && make install
 echo 'extension = "redis.so"' > /usr/local/php/conf.d/004-redis.ini
 
 # xlswriter
-cd ${DIR}/php-ext-excel-export
+cd ${DIR} && cd ${DIR}/php-ext-excel-export
 git submodule update --init
 /usr/local/php/bin/phpize
 ./configure --with-php-config=/usr/local/php/bin/php-config --enable-reader
@@ -166,13 +163,13 @@ make && make install
 echo 'extension = "xlswriter.so"' > /usr/local/php/conf.d/005-xlswriter.ini
 
 # ImageMagick
-tar -zxf ${DIR}/${ImageMagick_VERSION}.tar.gz
+cd ${DIR} && tar -zxf ${DIR}/${ImageMagick_VERSION}.tar.gz
 cd ${DIR}/ImageMagick-${ImageMagick_VERSION}
 ./configure --prefix=/usr/local/imagemagick
 make && make install
 
 # imagick
-tar zxf ${DIR}/${imagick_VERSION}.tgz
+cd ${DIR} && tar zxf ${DIR}/${imagick_VERSION}.tgz
 cd ${DIR}/${imagick_VERSION}
 /usr/local/php/bin/phpize
 ./configure --with-php-config=/usr/local/php/bin/php-config --with-imagick=/usr/local/imagemagick
