@@ -29,7 +29,7 @@ CONFIG="--prefix=/usr/local/php --with-config-file-path=/usr/local/php/etc --wit
 
 cd ${DIR}
 git clone https://github.com/viest/php-ext-excel-export
-wget -c --no-check-certificate https://www.php.net/distributions/${PHP_VERSION}.tar.bz2
+wget -c --no-check-certificate https://www.php.net/distributions/${PHP_VERSION}.tar.gz
 wget -c --no-check-certificate https://github.com/alanxz/rabbitmq-c/archive/refs/tags/v${RABBITMQ_VERSION}.tar.gz
 wget -c --no-check-certificate https://pecl.php.net/get/amqp-${AMQP_VERSION}.tgz
 wget -c --no-check-certificate https://pecl.php.net/get/${MONGODB_VERSION}.tgz
@@ -49,7 +49,7 @@ echo '/usr/local/freetype/lib' > /etc/ld.so.conf.d/freetype.conf
 ldconfig
 ln -sf /usr/local/freetype/include/freetype2/* /usr/include/
 
-tar xjf ${DIR}/${PHP_VERSION}.tar.bz2
+tar zxvf ${DIR}/${PHP_VERSION}.tar.gz
 cd ${DIR}/${PHP_VERSION}
 ./configure $CONFIG
 make -j "$(nproc)"
