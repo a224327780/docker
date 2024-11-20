@@ -26,4 +26,6 @@ elif [[ ${MemTotal} -gt 8192 ]]; then
   sed -i "s#pm.max_spare_servers.*#pm.max_spare_servers = 80#" /usr/local/php/etc/php-fpm.conf
 fi
 
+service ntp start || true
+
 php-fpm -F --fpm-config /usr/local/php/etc/php-fpm.conf
