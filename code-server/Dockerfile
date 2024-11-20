@@ -1,4 +1,4 @@
-FROM ghcr.io/a224327780/debian
+FROM caoyufei/debian
 
 COPY code-server/docker-entrypoint.sh /usr/bin/entrypoint.sh
 COPY code-server/install.sh /tmp/install.sh
