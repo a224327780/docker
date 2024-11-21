@@ -13,6 +13,12 @@ RUN apt-get update -y \
     && ln -sf /usr/local/imagemagick/bin/identify /usr/bin/identify \
     && ln -sf /usr/local/imagemagick/bin/magick /usr/bin/magick \
     && apt-get purge --auto-remove -y wget \
-    && convert --version
+    && echo '#!/bin/sh' >> /usr/bin/docker-entrypoint.sh \
+    && echo 'set -e' >> /usr/bin/docker-entrypoint.sh \
+    && echo 'exec "$@"' >> /usr/bin/docker-entrypoint.sh \
+    && chmod +x /usr/bin/docker-entrypoint.sh
+    && convert --version 
+
+ENTRYPOINT ["/usr/bin/docker-entrypoint.sh"]
 
 cmd ["convert"]
