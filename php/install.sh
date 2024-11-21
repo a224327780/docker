@@ -39,6 +39,7 @@ wget -c --no-check-certificate https://pecl.php.net/get/${imagick_VERSION}.tgz
 wget -c --no-check-certificate https://download.savannah.gnu.org/releases/freetype/${Freetype_New_Ver}.tar.xz
 
 # Freetype
+echo -e "[+] Installing ${Freetype_New_Ver}\n"
 cd ${DIR} && tar Jxf ${DIR}/${Freetype_New_Ver}.tar.xz
 cd ${DIR}/${Freetype_New_Ver}
 ./configure --prefix=/usr/local/freetype --enable-freetype-config
@@ -48,6 +49,18 @@ make && make install
 echo '/usr/local/freetype/lib' > /etc/ld.so.conf.d/freetype.conf
 ldconfig
 ln -sf /usr/local/freetype/include/freetype2/* /usr/include/
+
+# ImageMagick
+echo -e "[+] Installing ${ImageMagick_VERSION}\n"
+cd ${DIR} && tar -zxf ${DIR}/${ImageMagick_VERSION}.tar.gz
+cd ${DIR}/ImageMagick-${ImageMagick_VERSION}
+./configure --prefix=/usr/local/imagemagick
+make && make install
+ldconfig /usr/local/imagemagick/lib
+
+ln -sf /usr/local/imagemagick/bin/convert /usr/bin/convert
+ln -sf /usr/local/imagemagick/bin/identify /usr/bin/identify
+ln -sf /usr/local/imagemagick/bin/magick /usr/bin/magick
 
 echo -e "[+] Installing ${PHP_VERSION}\n"
 cd ${DIR} && tar zxf ${DIR}/${PHP_VERSION}.tar.gz
@@ -161,12 +174,6 @@ git submodule update --init
 ./configure --with-php-config=/usr/local/php/bin/php-config --enable-reader
 make && make install
 echo 'extension = "xlswriter.so"' > /usr/local/php/conf.d/005-xlswriter.ini
-
-# ImageMagick
-cd ${DIR} && tar -zxf ${DIR}/${ImageMagick_VERSION}.tar.gz
-cd ${DIR}/ImageMagick-${ImageMagick_VERSION}
-./configure --prefix=/usr/local/imagemagick
-make && make install
 
 # imagick
 cd ${DIR} && tar zxf ${DIR}/${imagick_VERSION}.tgz
