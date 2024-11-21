@@ -1,6 +1,6 @@
 FROM caoyufei/debian
 
-ENV DEBIAN_FRONTEND=noninteractive TIME_ZONE=Asia/Shanghai
+ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update -y \
     && apt-get install --no-install-recommends build-essential wget -y\
@@ -12,7 +12,7 @@ RUN apt-get update -y \
     && ln -sf /usr/local/imagemagick/bin/convert /usr/bin/convert \
     && ln -sf /usr/local/imagemagick/bin/identify /usr/bin/identify \
     && ln -sf /usr/local/imagemagick/bin/magick /usr/bin/magick \
-    && apt-get purge --auto-remove build-essential wget \
+    && apt-get purge --auto-remove -y build-essential wget \
     && convert --version
 
 cmd ["convert"]
