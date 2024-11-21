@@ -9,6 +9,7 @@ Freetype_New_Ver='freetype-2.10.1'
 MONGODB_VERSION='mongodb-1.19.4'
 xlswriter='1.5.8'
 ImageMagick_VERSION='7.1.1-40'
+Swoole_Ver='4.8.13'
 
 DIR='/tmp'
 
@@ -34,6 +35,7 @@ wget -c --no-check-certificate https://github.com/alanxz/rabbitmq-c/archive/refs
 wget -c --no-check-certificate https://pecl.php.net/get/amqp-${AMQP_VERSION}.tgz
 wget -c --no-check-certificate https://pecl.php.net/get/${MONGODB_VERSION}.tgz
 wget -c --no-check-certificate http://pecl.php.net/get/${PHPRedis_Ver}.tgz
+wget -c --no-check-certificate https://github.com/swoole/swoole-src/archive/refs/tags/v${Swoole_Ver}.tar.gz
 wget -c --no-check-certificate https://github.com/ImageMagick/ImageMagick/archive/refs/tags/${ImageMagick_VERSION}.tar.gz
 wget -c --no-check-certificate https://pecl.php.net/get/${imagick_VERSION}.tgz
 wget -c --no-check-certificate https://download.savannah.gnu.org/releases/freetype/${Freetype_New_Ver}.tar.xz
@@ -51,16 +53,16 @@ ldconfig
 ln -sf /usr/local/freetype/include/freetype2/* /usr/include/
 
 # ImageMagick
-echo -e "[+] Installing ${ImageMagick_VERSION}\n"
-cd ${DIR} && tar -zxf ${DIR}/${ImageMagick_VERSION}.tar.gz
-cd ${DIR}/ImageMagick-${ImageMagick_VERSION}
-./configure --prefix=/usr/local/imagemagick
-make && make install
-ldconfig /usr/local/imagemagick/lib
+# echo -e "[+] Installing ${ImageMagick_VERSION}\n"
+# cd ${DIR} && tar -zxf ${DIR}/${ImageMagick_VERSION}.tar.gz
+# cd ${DIR}/ImageMagick-${ImageMagick_VERSION}
+# ./configure --prefix=/usr/local/imagemagick
+# make && make install
+# ldconfig /usr/local/imagemagick/lib
 
-ln -sf /usr/local/imagemagick/bin/convert /usr/bin/convert
-ln -sf /usr/local/imagemagick/bin/identify /usr/bin/identify
-ln -sf /usr/local/imagemagick/bin/magick /usr/bin/magick
+# ln -sf /usr/local/imagemagick/bin/convert /usr/bin/convert
+# ln -sf /usr/local/imagemagick/bin/identify /usr/bin/identify
+# ln -sf /usr/local/imagemagick/bin/magick /usr/bin/magick
 
 echo -e "[+] Installing ${PHP_VERSION}\n"
 cd ${DIR} && tar zxf ${DIR}/${PHP_VERSION}.tar.gz
@@ -175,13 +177,21 @@ git submodule update --init
 make && make install
 echo 'extension = "xlswriter.so"' > /usr/local/php/conf.d/005-xlswriter.ini
 
-# imagick
-cd ${DIR} && tar zxf ${DIR}/${imagick_VERSION}.tgz
-cd ${DIR}/${imagick_VERSION}
+# Swoole
+cd ${DIR} && tar zxf ${DIR}/v${Swoole_Ver}.tar.gz
+cd ${DIR}/swoole-src-${Swoole_Ver}
 /usr/local/php/bin/phpize
-./configure --with-php-config=/usr/local/php/bin/php-config --with-imagick=/usr/local/imagemagick
+./configure --with-php-config=/usr/local/php/bin/php-config --enable-openssl --enable-http2 --enable-swoole-json
 make && make install
-echo 'extension = "imagick.so"' > /usr/local/php/conf.d/006-imagick.ini
+echo 'extension = "swoole.so"' > /usr/local/php/conf.d/006-swoole.ini
+
+# imagick
+# cd ${DIR} && tar zxf ${DIR}/${imagick_VERSION}.tgz
+# cd ${DIR}/${imagick_VERSION}
+# /usr/local/php/bin/phpize
+# ./configure --with-php-config=/usr/local/php/bin/php-config --with-imagick=/usr/local/imagemagick
+# make && make install
+# echo 'extension = "imagick.so"' > /usr/local/php/conf.d/006-imagick.ini
 
 # composer
 wget --no-check-certificate https://getcomposer.org/download/1.10.18/composer.phar -O /usr/local/bin/composer
