@@ -16,7 +16,7 @@ RUN apt-get update -y \
     && echo '#!/bin/sh' >> /usr/bin/docker-entrypoint.sh \
     && echo 'set -e' >> /usr/bin/docker-entrypoint.sh \
     && echo 'exec "$@"' >> /usr/bin/docker-entrypoint.sh \
-    && chmod +x /usr/bin/docker-entrypoint.sh
+    && chmod +x /usr/bin/docker-entrypoint.sh \
     && convert --version 
 
 ENTRYPOINT ["/usr/bin/docker-entrypoint.sh"]
