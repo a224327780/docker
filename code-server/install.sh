@@ -75,7 +75,7 @@ EOF
 curl https://rclone.org/install.sh | bash
 curl -fsSL https://deno.land/x/install/install.sh | sh
 curl -fsSL https://get.pnpm.io/install.sh | sh -
-curl -fsSL https://pyenv.run | bash
+curl -fsSL https://pyenv.run | zsh
 
 curl -o get-pip.py https://bootstrap.pypa.io/get-pip.py && python3 get-pip.py && rm -f get-pip.py
 pip install --no-cache-dir requests pyquery motor python-dotenv redis bottle aioredis aiosocksy aiomysql rsa aiohttp pyyaml sanic ruia pyppeteer pysocks
@@ -103,6 +103,7 @@ fi
 
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init - zsh)"
 if command -v pyenv >/dev/null 2>&1; then
   pyenv global 3.10
 fi
