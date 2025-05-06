@@ -67,18 +67,19 @@ cat >~/.gitconfig<<EOF
         rebase = false
 EOF
 
-# bash <(curl -fsSL cli.new) -y
 curl https://rclone.org/install.sh | bash
-curl -fsSL https://deno.land/x/install/install.sh | sh
+curl -fsSL https://deno.land/install.sh | sh
 curl -fsSL https://get.pnpm.io/install.sh | sh -
-curl -fsSL https://pyenv.run | zsh
+curl https://pyenv.run | zsh
 
-if [ -d "/root/.deno" ]; then
-  export DENO_INSTALL="/root/.deno"
-  export PATH="$DENO_INSTALL/bin:$PATH"
-  deno install --allow-all --no-check -r -f https://deno.land/x/deploy/deployctl.ts
-	echo "export DENO_INSTALL=\"/root/.deno\"" >> ~/.zshrc
-	echo "export PATH=\"\$DENO_INSTALL/bin:\$PATH\"" >> ~/.zshrc
+if command -v deno >/dev/null 2>&1; then
+  # export DENO_INSTALL="/root/.deno"
+  # export PATH="$DENO_INSTALL/bin:$PATH"
+  deno --version
+  deno install -gArf jsr:@deno/deployctl
+  deployctl --version
+	# echo "export DENO_INSTALL=\"/root/.deno\"" >> ~/.zshrc
+	# echo "export PATH=\"\$DENO_INSTALL/bin:\$PATH\"" >> ~/.zshrc
   echo 'export DENO_DEPLOY_TOKEN=""' >>~/.zshrc
 fi
 
@@ -94,10 +95,6 @@ if command -v pnpm >/dev/null 2>&1; then
   wrangler --version
 fi
 
-echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zshrc
-echo '[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.zshrc
-echo 'eval "$(pyenv init - zsh)"' >> ~/.zshrc
-source ~/.zshrc
 if command -v pyenv >/dev/null 2>&1; then
   pyenv install 3.10
   pyenv global 3.10
