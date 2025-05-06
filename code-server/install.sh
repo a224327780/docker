@@ -1,10 +1,11 @@
 #!/bin/bash
 
-apt-get update && apt-get install --no-install-recommends ca-certificates openssh-client procps zsh git unzip vim wget curl net-tools iputils-ping python3 python3-distutils -y
+# python3 python3-distutils 
+apt-get update && apt-get install --no-install-recommends ca-certificates openssh-client procps zsh git unzip vim wget curl net-tools iputils-ping -y
 
 ARCH=$(dpkg --print-architecture)
 
-CODE_RELEASE='4.95.3'
+CODE_RELEASE='4.99.4'
 
 #CODE_RELEASE=$(curl -sX GET https://api.github.com/repos/coder/code-server/releases/latest | awk '/tag_name/{print $4;exit}' FS='[""]' | sed 's|^v||')
 echo "${ARCH}-${CODE_RELEASE}"
@@ -58,6 +59,10 @@ echo 'DRACULA_DISPLAY_FULL_CWD=1' >>~/.zshrc
 echo 'DRACULA_DISPLAY_GIT=1' >>~/.zshrc
 echo 'cd /data/code-server/workspace' >> ~/.zshrc
 
+echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zshrc
+echo '[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.zshrc
+echo 'eval "$(pyenv init - zsh)"' >> ~/.zshrc
+
 cat >~/.gitconfig<<EOF
 [user]
         name = atcaoyufei
@@ -70,6 +75,7 @@ EOF
 curl https://rclone.org/install.sh | bash
 curl -fsSL https://deno.land/x/install/install.sh | sh
 curl -fsSL https://get.pnpm.io/install.sh | sh -
+curl -fsSL https://pyenv.run | bash
 
 curl -o get-pip.py https://bootstrap.pypa.io/get-pip.py && python3 get-pip.py && rm -f get-pip.py
 pip install --no-cache-dir requests pyquery motor python-dotenv redis bottle aioredis aiosocksy aiomysql rsa aiohttp pyyaml sanic ruia pyppeteer pysocks
@@ -95,13 +101,18 @@ if command -v pnpm >/dev/null 2>&1; then
   wrangler --version
 fi
 
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+if command -v pyenv >/dev/null 2>&1; then
+  pyenv global 3.10
+fi
+
+
 mkdir -p /data/code-server/{extensions,user-data,workspace} 
 chmod +x /usr/bin/entrypoint.sh /usr/bin/code-server
 
 cat >/data/code-server/workspace/NOTE.md<<EOF
 curl https://get.acme.sh | sh 
-
-flyctl launch --force-machines --image louislam/uptime-kuma:1 --name uptime001 --region hkg --internal-port 3001 --now
 
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZDOTDIR:-$HOME}/.oh-my-zsh/plugins/zsh-syntax-highlighting
 echo "source ${ZDOTDIR:-$HOME}/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc
