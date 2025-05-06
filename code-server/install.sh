@@ -77,9 +77,6 @@ curl -fsSL https://deno.land/x/install/install.sh | sh
 curl -fsSL https://get.pnpm.io/install.sh | sh -
 curl -fsSL https://pyenv.run | zsh
 
-curl -o get-pip.py https://bootstrap.pypa.io/get-pip.py && python3 get-pip.py && rm -f get-pip.py
-pip install --no-cache-dir requests pyquery motor python-dotenv redis bottle aioredis aiosocksy aiomysql rsa aiohttp pyyaml sanic ruia pyppeteer pysocks
-
 if [ -d "/root/.deno" ]; then
   export DENO_INSTALL="/root/.deno"
   export PATH="$DENO_INSTALL/bin:$PATH"
@@ -105,9 +102,13 @@ export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init - zsh)"
 if command -v pyenv >/dev/null 2>&1; then
-  pyenv global 3.10
+  pyenv install 3.10
 fi
 
+if command -v python3 >/dev/null 2>&1; then
+  curl -o get-pip.py https://bootstrap.pypa.io/get-pip.py && python3 get-pip.py && rm -f get-pip.py
+  pip3 install --no-cache-dir requests pyquery motor python-dotenv aioredis aiosocksy rsa aiohttp pyyaml sanic ruia pysocks
+fi
 
 mkdir -p /data/code-server/{extensions,user-data,workspace} 
 chmod +x /usr/bin/entrypoint.sh /usr/bin/code-server
