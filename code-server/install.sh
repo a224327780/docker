@@ -52,11 +52,14 @@ echo 'export LANGUAGE=zh_CN.UTF-8' >> ~/.zshrc
 echo 'export SHELL=/bin/zsh' >>~/.zshrc
 echo 'export CLOUDFLARE_API_TOKEN=""' >>~/.zshrc
 echo 'export CLOUDFLARE_ACCOUNT_ID=""' >>~/.zshrc
-echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.zshrc
 echo 'export GOPATH=/data/go' >> ~/.zshrc
 echo 'DRACULA_DISPLAY_CONTEXT=1' >>~/.zshrc
 echo 'DRACULA_DISPLAY_FULL_CWD=1' >>~/.zshrc
 echo 'DRACULA_DISPLAY_GIT=1' >>~/.zshrc
+echo 'export PATH=/usr/local/go/bin:$PATH' >> ~/.zshrc
+echo 'export PATH=/root/.deno/bin:$PATH' >> ~/.zshrc
+echo 'export PATH=/root/.pyenv/bin:$PATH' >> ~/.zshrc
+echo 'export DENO_DEPLOY_TOKEN=""' >>~/.zshrc
 echo 'cd /data/code-server/workspace' >> ~/.zshrc
 
 cat >~/.gitconfig<<EOF
@@ -72,15 +75,11 @@ curl -fsSL https://deno.land/install.sh | sh
 curl -fsSL https://get.pnpm.io/install.sh | sh -
 curl https://pyenv.run | zsh
 
+export PATH="/root/.deno/bin:$PATH"
 if command -v deno >/dev/null 2>&1; then
-  # export DENO_INSTALL="/root/.deno"
-  # export PATH="$DENO_INSTALL/bin:$PATH"
   deno --version
   deno install -gArf jsr:@deno/deployctl
   deployctl --version
-	# echo "export DENO_INSTALL=\"/root/.deno\"" >> ~/.zshrc
-	# echo "export PATH=\"\$DENO_INSTALL/bin:\$PATH\"" >> ~/.zshrc
-  echo 'export DENO_DEPLOY_TOKEN=""' >>~/.zshrc
 fi
 
 export PNPM_HOME="/root/.local/share/pnpm"
@@ -95,6 +94,7 @@ if command -v pnpm >/dev/null 2>&1; then
   wrangler --version
 fi
 
+export PATH=/root/.pyenv/bin:$PATH
 if command -v pyenv >/dev/null 2>&1; then
   pyenv install 3.10
   pyenv global 3.10
