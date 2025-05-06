@@ -59,10 +59,6 @@ echo 'DRACULA_DISPLAY_FULL_CWD=1' >>~/.zshrc
 echo 'DRACULA_DISPLAY_GIT=1' >>~/.zshrc
 echo 'cd /data/code-server/workspace' >> ~/.zshrc
 
-echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zshrc
-echo '[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.zshrc
-echo 'eval "$(pyenv init - zsh)"' >> ~/.zshrc
-
 cat >~/.gitconfig<<EOF
 [user]
         name = atcaoyufei
@@ -98,11 +94,13 @@ if command -v pnpm >/dev/null 2>&1; then
   wrangler --version
 fi
 
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init - zsh)"
+echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zshrc
+echo '[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.zshrc
+echo 'eval "$(pyenv init - zsh)"' >> ~/.zshrc
+source ~/.zshrc
 if command -v pyenv >/dev/null 2>&1; then
   pyenv install 3.10
+  pyenv global 3.10
 fi
 
 if command -v python3 >/dev/null 2>&1; then
