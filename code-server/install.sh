@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # python3 python3-distutils 
-apt-get update && apt-get install --no-install-recommends ca-certificates openssh-client procps zsh git unzip vim wget curl net-tools iputils-ping -y
+apt-get update && apt-get install --no-install-recommends make build-essential ca-certificates openssh-client procps zsh git unzip vim wget curl net-tools iputils-ping -y
 
 ARCH=$(dpkg --print-architecture)
 
