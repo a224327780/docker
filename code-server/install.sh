@@ -6,7 +6,7 @@ apt-get install --no-install-recommends -y make build-essential libssl-dev zlib1
 
 ARCH=$(dpkg --print-architecture)
 
-CODE_RELEASE='4.99.4'
+CODE_RELEASE='4.100.0'
 
 #CODE_RELEASE=$(curl -sX GET https://api.github.com/repos/coder/code-server/releases/latest | awk '/tag_name/{print $4;exit}' FS='[""]' | sed 's|^v||')
 echo "${ARCH}-${CODE_RELEASE}"
@@ -104,6 +104,8 @@ fi
 if command -v python3 >/dev/null 2>&1; then
   curl -o get-pip.py https://bootstrap.pypa.io/get-pip.py && python3 get-pip.py && rm -f get-pip.py
   pip3 install --no-cache-dir requests pyquery motor python-dotenv aioredis aiosocksy rsa aiohttp pyyaml sanic ruia pysocks
+else
+  echo "python not install"
 fi
 
 mkdir -p /data/code-server/{extensions,user-data,workspace} 
