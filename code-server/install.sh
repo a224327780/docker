@@ -122,5 +122,7 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZDOTDIR:-$H
 echo "source ${ZDOTDIR:-$HOME}/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc
 EOF
 
-apt clean
+apt-get purge make gcc g++ -y
+apt-get autoremove -y
+apt-get clean
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
