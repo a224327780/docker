@@ -1,8 +1,7 @@
 #!/bin/bash
 
-# python3 python3-distutils 
-apt-get update && apt-get install --no-install-recommends ca-certificates openssh-client procps zsh git unzip vim wget curl net-tools iputils-ping -y
-apt-get install --no-install-recommends -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev
+apt-get update && apt-get install --no-install-recommends ca-certificates openssh-client procps zsh git unzip vim wget curl net-tools iputils-ping python3 python3-distutils -y
+# apt-get install --no-install-recommends -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev
 
 ARCH=$(dpkg --print-architecture)
 
@@ -27,9 +26,6 @@ chsh -s $(which zsh)
 export SHELL=$(which zsh)
 echo "current shell: $SHELL\n"
 
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZDOTDIR:-$HOME}/.oh-my-zsh/plugins/zsh-syntax-highlighting
-echo "source ${ZDOTDIR:-$HOME}/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc
-
 wget --no-check-certificate -O /tmp/master.zip https://github.com/dracula/zsh/archive/master.zip
 unzip /tmp/master.zip -d /tmp
 ls -la /tmp
@@ -45,6 +41,14 @@ set smartindent
 set wrap
 set ruler
 EOF
+
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/plugins/zsh-syntax-highlighting
+echo "source ~/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
+
+git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/plugins/zsh-autosuggestions
+echo "source ~/.oh-my-zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" >> ~/.zshrc
+
+ls -la ~/.oh-my-zsh/plugins
 
 echo 'alias ll="ls -la"' >> ~/.zshrc
 echo 'alias vi="vim"' >> ~/.zshrc
@@ -65,8 +69,8 @@ echo 'cd /data/code-server/workspace' >> ~/.zshrc
 
 cat >~/.gitconfig<<EOF
 [user]
-        name = atcaoyufei
-        email = atcaoyufei@gmail.com
+        name = a224327780
+        email = a224327780@gmail.com
 [pull]
         rebase = false
 EOF
@@ -95,15 +99,15 @@ if command -v pnpm >/dev/null 2>&1; then
   wrangler --version
 fi
 
-export PATH=/root/.pyenv/bin:$PATH
-if command -v pyenv >/dev/null 2>&1; then
-  pyenv install 3.10
-  pyenv global 3.10
-fi
+# export PATH=/root/.pyenv/bin:$PATH
+# if command -v pyenv >/dev/null 2>&1; then
+#   pyenv install 3.10
+#   pyenv global 3.10
+# fi
 
 if command -v python3 >/dev/null 2>&1; then
   curl -o get-pip.py https://bootstrap.pypa.io/get-pip.py && python3 get-pip.py && rm -f get-pip.py
-  pip3 install --no-cache-dir requests pyquery motor python-dotenv aioredis aiosocksy rsa aiohttp pyyaml sanic ruia pysocks
+  pip3 install --no-cache-dir requests pyquery motor python-dotenv aioredis aiosocksy rsa aiohttp sanic pysocks
 else
   echo "python not install"
 fi
